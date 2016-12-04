@@ -4,16 +4,26 @@ from PyQt5 import QtCore, QtGui, uic, QtWidgets
 from mainwindow import Ui_MainWindow
 from shutil import copy2
 import datetime
-
+import spidev
 
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
     metaDict = {}
     saveDir = r'C:\Users\samke\Desktop\Tester'
+    bus = 0
+    device = 0
 
     def __init__(self, parent=None, name=None):
         super(MyWindowClass, self).__init__(parent)
         self.setupUi(self)
+        
+        # Initialize SPI
+	spi = spidev.SpiDev()
+	spi.open(bus, device)
+
+	#recieved = spi.xfer(to_send)
+	#print(str(recieved))
+        
 
         # Home page connections
         self.JumpProject.clicked.connect(self.jump2Project)
@@ -24,7 +34,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.FileSelector.itemClicked.connect(self.dispMeta)
 
         # Manual page connections
-
+	self.xHome.clicked.connect(self.homeX)
 
         #Link up to loaded files
         #print(os.listdir(self.saveDir))
@@ -99,6 +109,12 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
                                      'File size: ' + sizeBytes + '\n\n' +
                                      'Date last modified: ' + dateModified + '\n\n' +
                                      'Date uploaded: ' + self.metaDict[name.text()])
+
+    def homeX(self):
+        data = [0x03, 0b10000000]
+        spi.xfer(data)
+	recieved = spi.readbytes(2)
+        print(recieved)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
