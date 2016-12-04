@@ -26,6 +26,7 @@
 #include "GCode.h"
 #include "interp.h"
 #include "autoHome.h"
+#include "comm.h"
 
 /* LED control defines (active low)*/
 #define LIGHT_OFF                       (1u)
