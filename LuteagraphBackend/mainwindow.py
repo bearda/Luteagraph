@@ -69,6 +69,7 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Highlight, brush)
         self.TabBar.setPalette(palette)
         font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
         font.setPointSize(14)
         self.TabBar.setFont(font)
         self.TabBar.setAutoFillBackground(False)
@@ -202,7 +203,7 @@ class Ui_MainWindow(object):
         self.Project.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.Project.setObjectName("Project")
         self.LoadFile = QtWidgets.QPushButton(self.Project)
-        self.LoadFile.setGeometry(QtCore.QRect(20, 350, 221, 31))
+        self.LoadFile.setGeometry(QtCore.QRect(30, 340, 211, 31))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.LoadFile.setFont(font)
@@ -216,7 +217,7 @@ class Ui_MainWindow(object):
         self.LoadFile.setIcon(icon2)
         self.LoadFile.setObjectName("LoadFile")
         self.Start = QtWidgets.QPushButton(self.Project)
-        self.Start.setGeometry(QtCore.QRect(260, 30, 201, 61))
+        self.Start.setGeometry(QtCore.QRect(270, 20, 201, 61))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.Start.setFont(font)
@@ -225,71 +226,8 @@ class Ui_MainWindow(object):
 "border-radius: 4px;\n"
 "color:rgb(161, 164, 163);")
         self.Start.setObjectName("Start")
-        self.SpeedSliderProj = QtWidgets.QSlider(self.Project)
-        self.SpeedSliderProj.setGeometry(QtCore.QRect(480, 100, 161, 20))
-        palette = QtGui.QPalette()
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Text, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Text, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Text, brush)
-        brush = QtGui.QBrush(QtGui.QColor(172, 99, 22))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ButtonText, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
-        brush = QtGui.QBrush(QtGui.QColor(83, 81, 90))
-        brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
-        self.SpeedSliderProj.setPalette(palette)
-        self.SpeedSliderProj.setStyleSheet("color: rgb(172, 99, 22)")
-        self.SpeedSliderProj.setMaximum(200)
-        self.SpeedSliderProj.setSliderPosition(100)
-        self.SpeedSliderProj.setOrientation(QtCore.Qt.Horizontal)
-        self.SpeedSliderProj.setObjectName("SpeedSliderProj")
         self.ProgressBar = QtWidgets.QProgressBar(self.Project)
-        self.ProgressBar.setGeometry(QtCore.QRect(480, 30, 271, 41))
+        self.ProgressBar.setGeometry(QtCore.QRect(480, 20, 281, 41))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(161, 164, 163))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -365,12 +303,12 @@ class Ui_MainWindow(object):
 "border-color: rgb(172, 99, 22);\n"
 "border-radius:5px;\n"
 "")
-        self.ProgressBar.setMaximum(150)
-        self.ProgressBar.setProperty("value", 20)
+        self.ProgressBar.setMaximum(100)
+        self.ProgressBar.setProperty("value", 0)
         self.ProgressBar.setAlignment(QtCore.Qt.AlignCenter)
         self.ProgressBar.setObjectName("ProgressBar")
         self.FileSelector = QtWidgets.QListWidget(self.Project)
-        self.FileSelector.setGeometry(QtCore.QRect(20, 30, 221, 321))
+        self.FileSelector.setGeometry(QtCore.QRect(30, 20, 211, 321))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -389,7 +327,7 @@ class Ui_MainWindow(object):
 "")
         self.FileSelector.setObjectName("FileSelector")
         self.Pause = QtWidgets.QPushButton(self.Project)
-        self.Pause.setGeometry(QtCore.QRect(260, 100, 201, 61))
+        self.Pause.setGeometry(QtCore.QRect(270, 90, 201, 61))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.Pause.setFont(font)
@@ -399,7 +337,7 @@ class Ui_MainWindow(object):
 "color: rgb(161, 164, 163) ")
         self.Pause.setObjectName("Pause")
         self.Stop = QtWidgets.QPushButton(self.Project)
-        self.Stop.setGeometry(QtCore.QRect(260, 170, 201, 61))
+        self.Stop.setGeometry(QtCore.QRect(270, 160, 201, 61))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.Stop.setFont(font)
@@ -409,7 +347,7 @@ class Ui_MainWindow(object):
 "color: rgb(161, 164, 163);")
         self.Stop.setObjectName("Stop")
         self.FileDescription = QtWidgets.QLabel(self.Project)
-        self.FileDescription.setGeometry(QtCore.QRect(260, 240, 491, 141))
+        self.FileDescription.setGeometry(QtCore.QRect(270, 230, 491, 141))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.FileDescription.setFont(font)
@@ -421,103 +359,150 @@ class Ui_MainWindow(object):
         self.FileDescription.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.FileDescription.setObjectName("FileDescription")
         self.TimeEstimate = QtWidgets.QLabel(self.Project)
-        self.TimeEstimate.setGeometry(QtCore.QRect(480, 70, 271, 16))
+        self.TimeEstimate.setGeometry(QtCore.QRect(480, 60, 271, 16))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.TimeEstimate.setFont(font)
         self.TimeEstimate.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
         self.TimeEstimate.setObjectName("TimeEstimate")
-        self.label_10 = QtWidgets.QLabel(self.Project)
-        self.label_10.setGeometry(QtCore.QRect(660, 100, 81, 21))
+        self.label_55 = QtWidgets.QLabel(self.Project)
+        self.label_55.setGeometry(QtCore.QRect(580, 120, 81, 51))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
-        font.setPointSize(12)
-        self.label_10.setFont(font)
-        self.label_10.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
-        self.label_10.setObjectName("label_10")
+        self.label_55.setFont(font)
+        self.label_55.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.label_55.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_55.setObjectName("label_55")
+        self.pushButton_52 = QtWidgets.QPushButton(self.Project)
+        self.pushButton_52.setGeometry(QtCore.QRect(670, 110, 51, 51))
+        self.pushButton_52.setStyleSheet("background-color: rgba(255, 255, 255, 0);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_52.setText("")
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Right50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_52.setIcon(icon3)
+        self.pushButton_52.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_52.setObjectName("pushButton_52")
+        self.label_56 = QtWidgets.QLabel(self.Project)
+        self.label_56.setGeometry(QtCore.QRect(580, 100, 81, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        self.label_56.setFont(font)
+        self.label_56.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.label_56.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_56.setObjectName("label_56")
+        self.pushButton_53 = QtWidgets.QPushButton(self.Project)
+        self.pushButton_53.setGeometry(QtCore.QRect(520, 110, 51, 51))
+        self.pushButton_53.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_53.setText("")
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Left50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_53.setIcon(icon4)
+        self.pushButton_53.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_53.setObjectName("pushButton_53")
+        self.FileDescription_4 = QtWidgets.QLabel(self.Project)
+        self.FileDescription_4.setGeometry(QtCore.QRect(500, 90, 241, 91))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        self.FileDescription_4.setFont(font)
+        self.FileDescription_4.setStyleSheet("background-color: rgb(27, 32, 39);\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-radius: 4px;\n"
+"border-color:rgb(172, 99, 22)")
+        self.FileDescription_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.FileDescription_4.setObjectName("FileDescription_4")
+        self.FileDescription_4.raise_()
         self.LoadFile.raise_()
         self.Start.raise_()
-        self.SpeedSliderProj.raise_()
         self.ProgressBar.raise_()
         self.Pause.raise_()
         self.Stop.raise_()
         self.FileSelector.raise_()
         self.FileDescription.raise_()
         self.TimeEstimate.raise_()
-        self.label_10.raise_()
+        self.label_55.raise_()
+        self.pushButton_52.raise_()
+        self.label_56.raise_()
+        self.pushButton_53.raise_()
         self.TabBar.addTab(self.Project, "")
         self.Manual = QtWidgets.QWidget()
         self.Manual.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.Manual.setObjectName("Manual")
         self.pushButton_6 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_6.setGeometry(QtCore.QRect(530, 230, 41, 41))
+        self.pushButton_6.setGeometry(QtCore.QRect(210, 120, 51, 51))
+        self.pushButton_6.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_6.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("../Icons/RightR.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_6.setIcon(icon3)
         self.pushButton_6.setIconSize(QtCore.QSize(30, 30))
         self.pushButton_6.setObjectName("pushButton_6")
         self.label_4 = QtWidgets.QLabel(self.Manual)
-        self.label_4.setGeometry(QtCore.QRect(450, 230, 61, 41))
+        self.label_4.setGeometry(QtCore.QRect(140, 120, 51, 51))
         font = QtGui.QFont()
-        font.setFamily("Arial Black")
+        font.setFamily("Arial Rounded MT Bold")
+        font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
         self.label_4.setFont(font)
         self.label_4.setMouseTracking(True)
+        self.label_4.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
-        self.label_5 = QtWidgets.QLabel(self.Manual)
-        self.label_5.setGeometry(QtCore.QRect(610, 230, 61, 41))
-        font = QtGui.QFont()
-        font.setFamily("Arial Black")
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_5.setFont(font)
-        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_5.setObjectName("label_5")
         self.pushButton_8 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_8.setGeometry(QtCore.QRect(460, 300, 41, 41))
+        self.pushButton_8.setGeometry(QtCore.QRect(140, 190, 51, 51))
+        self.pushButton_8.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_8.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("../Icons/DownR.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_8.setIcon(icon4)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Down50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_8.setIcon(icon5)
         self.pushButton_8.setIconSize(QtCore.QSize(30, 30))
         self.pushButton_8.setObjectName("pushButton_8")
         self.pushButton_9 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_9.setGeometry(QtCore.QRect(390, 230, 41, 41))
+        self.pushButton_9.setGeometry(QtCore.QRect(70, 120, 51, 51))
+        self.pushButton_9.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_9.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("../Icons/LeftR.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_9.setIcon(icon5)
+        self.pushButton_9.setIcon(icon4)
         self.pushButton_9.setIconSize(QtCore.QSize(30, 30))
         self.pushButton_9.setObjectName("pushButton_9")
         self.pushButton_7 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_7.setGeometry(QtCore.QRect(460, 160, 41, 41))
+        self.pushButton_7.setGeometry(QtCore.QRect(140, 50, 51, 51))
+        self.pushButton_7.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_7.setText("")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("../Icons/UpR.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Up50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_7.setIcon(icon6)
         self.pushButton_7.setIconSize(QtCore.QSize(30, 30))
         self.pushButton_7.setObjectName("pushButton_7")
-        self.pushButton_10 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_10.setGeometry(QtCore.QRect(620, 160, 41, 41))
-        self.pushButton_10.setText("")
-        self.pushButton_10.setIcon(icon6)
-        self.pushButton_10.setIconSize(QtCore.QSize(30, 30))
-        self.pushButton_10.setObjectName("pushButton_10")
-        self.pushButton_11 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_11.setGeometry(QtCore.QRect(620, 300, 41, 41))
-        self.pushButton_11.setText("")
-        self.pushButton_11.setIcon(icon4)
-        self.pushButton_11.setIconSize(QtCore.QSize(30, 30))
-        self.pushButton_11.setObjectName("pushButton_11")
-        self.horizontalSlider_2 = QtWidgets.QSlider(self.Manual)
-        self.horizontalSlider_2.setGeometry(QtCore.QRect(440, 380, 160, 16))
-        self.horizontalSlider_2.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_2.setObjectName("horizontalSlider_2")
         self.pushButton_12 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_12.setGeometry(QtCore.QRect(330, 20, 41, 41))
+        self.pushButton_12.setGeometry(QtCore.QRect(130, 300, 51, 51))
+        self.pushButton_12.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_12.setText("")
         icon7 = QtGui.QIcon()
         icon7.addPixmap(QtGui.QPixmap("../Icons/Temple.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -525,17 +510,303 @@ class Ui_MainWindow(object):
         self.pushButton_12.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_12.setObjectName("pushButton_12")
         self.pushButton_13 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_13.setGeometry(QtCore.QRect(330, 70, 41, 41))
+        self.pushButton_13.setGeometry(QtCore.QRect(200, 300, 51, 51))
+        self.pushButton_13.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_13.setText("")
         self.pushButton_13.setIcon(icon7)
         self.pushButton_13.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_13.setObjectName("pushButton_13")
+        self.label_2 = QtWidgets.QLabel(self.Manual)
+        self.label_2.setGeometry(QtCore.QRect(130, 110, 71, 71))
+        self.label_2.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 35px;\n"
+"border-color: rgb(172, 99, 22);\n"
+"border-width: 2px;")
+        self.label_2.setText("")
+        self.label_2.setObjectName("label_2")
+        self.label_12 = QtWidgets.QLabel(self.Manual)
+        self.label_12.setGeometry(QtCore.QRect(100, 80, 131, 131))
+        self.label_12.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 65px;\n"
+"border-color: rgb(172, 99, 22);\n"
+"border-width: 5px;")
+        self.label_12.setText("")
+        self.label_12.setObjectName("label_12")
+        self.pushButton_16 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_16.setGeometry(QtCore.QRect(60, 300, 51, 51))
+        self.pushButton_16.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_16.setText("")
+        self.pushButton_16.setIcon(icon7)
+        self.pushButton_16.setIconSize(QtCore.QSize(25, 25))
+        self.pushButton_16.setObjectName("pushButton_16")
+        self.label = QtWidgets.QLabel(self.Manual)
+        self.label.setGeometry(QtCore.QRect(30, 20, 731, 251))
+        font = QtGui.QFont()
+        font.setFamily("Informal Roman")
+        self.label.setFont(font)
+        self.label.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-radius: 4px;\n"
+"border-color:rgb(172, 99, 22)")
+        self.label.setText("")
+        self.label.setObjectName("label")
+        self.label_5 = QtWidgets.QLabel(self.Manual)
+        self.label_5.setGeometry(QtCore.QRect(370, 120, 51, 51))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_5.setFont(font)
+        self.label_5.setMouseTracking(True)
+        self.label_5.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_5.setObjectName("label_5")
+        self.pushButton_10 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_10.setGeometry(QtCore.QRect(370, 50, 51, 51))
+        self.pushButton_10.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_10.setText("")
+        self.pushButton_10.setIcon(icon6)
+        self.pushButton_10.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_10.setObjectName("pushButton_10")
+        self.pushButton_11 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_11.setGeometry(QtCore.QRect(370, 190, 51, 51))
+        self.pushButton_11.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_11.setText("")
+        self.pushButton_11.setIcon(icon5)
+        self.pushButton_11.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_11.setObjectName("pushButton_11")
+        self.label_34 = QtWidgets.QLabel(self.Manual)
+        self.label_34.setGeometry(QtCore.QRect(360, 110, 71, 71))
+        self.label_34.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 35px;\n"
+"border-color: rgb(172, 99, 22);\n"
+"border-width: 2px;")
+        self.label_34.setText("")
+        self.label_34.setObjectName("label_34")
+        self.label_35 = QtWidgets.QLabel(self.Manual)
+        self.label_35.setGeometry(QtCore.QRect(330, 80, 131, 131))
+        self.label_35.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 65px;\n"
+"border-color: rgb(172, 99, 22);\n"
+"border-width: 5px;")
+        self.label_35.setText("")
+        self.label_35.setObjectName("label_35")
+        self.label_13 = QtWidgets.QLabel(self.Manual)
+        self.label_13.setGeometry(QtCore.QRect(600, 120, 51, 51))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_13.setFont(font)
+        self.label_13.setMouseTracking(True)
+        self.label_13.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.label_13.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_13.setObjectName("label_13")
+        self.label_14 = QtWidgets.QLabel(self.Manual)
+        self.label_14.setGeometry(QtCore.QRect(590, 110, 71, 71))
+        self.label_14.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 35px;\n"
+"border-color: rgb(172, 99, 22);\n"
+"border-width: 2px;")
+        self.label_14.setText("")
+        self.label_14.setObjectName("label_14")
+        self.label_15 = QtWidgets.QLabel(self.Manual)
+        self.label_15.setGeometry(QtCore.QRect(560, 80, 131, 131))
+        self.label_15.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 65px;\n"
+"border-color: rgb(172, 99, 22);\n"
+"border-width: 5px;")
+        self.label_15.setText("")
+        self.label_15.setObjectName("label_15")
+        self.pushButton_19 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_19.setGeometry(QtCore.QRect(670, 120, 51, 51))
+        self.pushButton_19.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_19.setText("")
+        self.pushButton_19.setIcon(icon6)
+        self.pushButton_19.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_19.setObjectName("pushButton_19")
+        self.pushButton_20 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_20.setGeometry(QtCore.QRect(530, 120, 51, 51))
+        self.pushButton_20.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_20.setText("")
+        self.pushButton_20.setIcon(icon6)
+        self.pushButton_20.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_20.setObjectName("pushButton_20")
+        self.pushButton_36 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_36.setGeometry(QtCore.QRect(300, 280, 51, 51))
+        self.pushButton_36.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_36.setText("")
+        self.pushButton_36.setIcon(icon4)
+        self.pushButton_36.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_36.setObjectName("pushButton_36")
+        self.pushButton_34 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_34.setGeometry(QtCore.QRect(440, 280, 51, 51))
+        self.pushButton_34.setStyleSheet("background-color: rgba(255, 255, 255, 0);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_34.setText("")
+        self.pushButton_34.setIcon(icon3)
+        self.pushButton_34.setIconSize(QtCore.QSize(30, 30))
+        self.pushButton_34.setObjectName("pushButton_34")
+        self.label_11 = QtWidgets.QLabel(self.Manual)
+        self.label_11.setGeometry(QtCore.QRect(360, 270, 71, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        self.label_11.setFont(font)
+        self.label_11.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.label_11.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_11.setObjectName("label_11")
+        self.label_30 = QtWidgets.QLabel(self.Manual)
+        self.label_30.setGeometry(QtCore.QRect(360, 290, 71, 51))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        self.label_30.setFont(font)
+        self.label_30.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.label_30.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_30.setObjectName("label_30")
+        self.label_31 = QtWidgets.QLabel(self.Manual)
+        self.label_31.setGeometry(QtCore.QRect(40, 280, 231, 91))
+        font = QtGui.QFont()
+        font.setFamily("Informal Roman")
+        self.label_31.setFont(font)
+        self.label_31.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-radius: 4px;\n"
+"border-color:rgb(172, 99, 22)")
+        self.label_31.setText("")
+        self.label_31.setObjectName("label_31")
+        self.label_32 = QtWidgets.QLabel(self.Manual)
+        self.label_32.setGeometry(QtCore.QRect(280, 270, 231, 81))
+        font = QtGui.QFont()
+        font.setFamily("Informal Roman")
+        self.label_32.setFont(font)
+        self.label_32.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-bottom-left-radius: 4px;\n"
+"border-bottom-right-radius: 4px;\n"
+"border-left-color:rgb(172, 99, 22);\n"
+"border-right-color:rgb(172, 99, 22);\n"
+"border-bottom-color:rgb(172, 99, 22);\n"
+"border-top-color:rgb(22, 27, 34);")
+        self.label_32.setText("")
+        self.label_32.setObjectName("label_32")
+        self.pushButton_17 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_17.setGeometry(QtCore.QRect(540, 300, 51, 51))
+        self.pushButton_17.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_17.setText("")
+        self.pushButton_17.setIcon(icon7)
+        self.pushButton_17.setIconSize(QtCore.QSize(25, 25))
+        self.pushButton_17.setObjectName("pushButton_17")
+        self.label_33 = QtWidgets.QLabel(self.Manual)
+        self.label_33.setGeometry(QtCore.QRect(520, 280, 231, 91))
+        font = QtGui.QFont()
+        font.setFamily("Informal Roman")
+        self.label_33.setFont(font)
+        self.label_33.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-radius: 4px;\n"
+"border-color:rgb(172, 99, 22)")
+        self.label_33.setText("")
+        self.label_33.setObjectName("label_33")
         self.pushButton_14 = QtWidgets.QPushButton(self.Manual)
-        self.pushButton_14.setGeometry(QtCore.QRect(330, 120, 41, 41))
+        self.pushButton_14.setGeometry(QtCore.QRect(680, 300, 51, 51))
+        self.pushButton_14.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
         self.pushButton_14.setText("")
         self.pushButton_14.setIcon(icon7)
         self.pushButton_14.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_14.setObjectName("pushButton_14")
+        self.pushButton_15 = QtWidgets.QPushButton(self.Manual)
+        self.pushButton_15.setGeometry(QtCore.QRect(610, 300, 51, 51))
+        self.pushButton_15.setStyleSheet("background-color: rgb(22, 27, 34);\n"
+"border-style: solid;\n"
+"border-radius: 10px;\n"
+"border-width: 2px;\n"
+"border-color:rgb(161, 164, 163);")
+        self.pushButton_15.setText("")
+        self.pushButton_15.setIcon(icon7)
+        self.pushButton_15.setIconSize(QtCore.QSize(25, 25))
+        self.pushButton_15.setObjectName("pushButton_15")
+        self.label_33.raise_()
+        self.pushButton_17.raise_()
+        self.pushButton_15.raise_()
+        self.pushButton_14.raise_()
+        self.label.raise_()
+        self.label_32.raise_()
+        self.label_31.raise_()
+        self.label_35.raise_()
+        self.label_12.raise_()
+        self.label_2.raise_()
+        self.label_4.raise_()
+        self.pushButton_8.raise_()
+        self.pushButton_9.raise_()
+        self.pushButton_7.raise_()
+        self.pushButton_12.raise_()
+        self.pushButton_13.raise_()
+        self.pushButton_16.raise_()
+        self.pushButton_6.raise_()
+        self.pushButton_10.raise_()
+        self.pushButton_11.raise_()
+        self.label_34.raise_()
+        self.label_5.raise_()
+        self.label_15.raise_()
+        self.label_14.raise_()
+        self.label_13.raise_()
+        self.pushButton_19.raise_()
+        self.pushButton_20.raise_()
+        self.pushButton_36.raise_()
+        self.pushButton_34.raise_()
+        self.label_11.raise_()
+        self.label_30.raise_()
         self.TabBar.addTab(self.Manual, "")
         self.Error = QtWidgets.QWidget()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -546,14 +817,22 @@ class Ui_MainWindow(object):
         self.Error.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
         self.Error.setObjectName("Error")
         self.label_6 = QtWidgets.QLabel(self.Error)
-        self.label_6.setGeometry(QtCore.QRect(10, 10, 771, 391))
+        self.label_6.setGeometry(QtCore.QRect(30, 20, 731, 351))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        self.label_6.setFont(font)
+        self.label_6.setStyleSheet("background-color: rgb(27, 32, 39);\n"
+"border-style: solid;\n"
+"border-width: 1px;\n"
+"border-radius: 4px;\n"
+"border-color:rgb(172, 99, 22)")
         self.label_6.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.label_6.setObjectName("label_6")
         self.TabBar.addTab(self.Error, "")
         MainWindow.setCentralWidget(self.centralWidget)
 
         self.retranslateUi(MainWindow)
-        self.TabBar.setCurrentIndex(0)
+        self.TabBar.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -569,14 +848,19 @@ class Ui_MainWindow(object):
         self.FileSelector.setSortingEnabled(True)
         self.Pause.setText(_translate("MainWindow", "Pause"))
         self.Stop.setText(_translate("MainWindow", "Stop"))
-        self.FileDescription.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#a1a4a3;\">File size: 103kB</span></p><p><span style=\" color:#a1a4a3;\">Date last modified: 11/23/2016</span></p><p><span style=\" color:#a1a4a3;\">File name: yeahboi.gcode</span></p></body></html>"))
-        self.TimeEstimate.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#a1a4a3;\">Estimated time to completion: 45m 26s</span></p></body></html>"))
-        self.label_10.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#a1a4a3;\">Speed: 45%</span></p></body></html>"))
+        self.FileDescription.setText(_translate("MainWindow", "<html><head/><body><p><br/></p></body></html>"))
+        self.TimeEstimate.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" color:#a1a4a3;\">Estimated time to completion:</span></p></body></html>"))
+        self.label_55.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; color:#a1a4a3;\">100%</span></p></body></html>"))
+        self.label_56.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; color:#a1a4a3;\">Speed:</span></p></body></html>"))
+        self.FileDescription_4.setText(_translate("MainWindow", "<html><head/><body><p><br/></p></body></html>"))
         self.TabBar.setTabText(self.TabBar.indexOf(self.Project), _translate("MainWindow", "Project"))
-        self.label_4.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; color:#40e2a0;\">X/Y</span></p></body></html>"))
-        self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt; color:#40e2a0;\">Z</span></p></body></html>"))
+        self.label_4.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; color:#a1a4a3;\">X/Y</span></p></body></html>"))
+        self.label_5.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; color:#a1a4a3;\">Z</span></p></body></html>"))
+        self.label_13.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; color:#a1a4a3;\">&theta;</span></p></body></html>"))
+        self.label_11.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; color:#a1a4a3;\">Speed:</span></p></body></html>"))
+        self.label_30.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt; color:#a1a4a3;\">1 mm</span></p></body></html>"))
         self.TabBar.setTabText(self.TabBar.indexOf(self.Manual), _translate("MainWindow", "Manual"))
-        self.label_6.setText(_translate("MainWindow", "No errors"))
+        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; color:#a1a4a3;\">There are currently no errors.</span></p></body></html>"))
         self.TabBar.setTabText(self.TabBar.indexOf(self.Error), _translate("MainWindow", "Error Dialogue"))
 
 import icons_rc
