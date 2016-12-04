@@ -204,7 +204,7 @@ ui-&gt;Tab_Inbox-&gt;setStyleSheet(&quot;background-color:grey;&quot;);</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>280</y>
+        <y>290</y>
         <width>361</width>
         <height>91</height>
        </rect>
@@ -236,7 +236,7 @@ color: rgb(55, 52, 48);
         <x>30</x>
         <y>150</y>
         <width>731</width>
-        <height>131</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="font">
@@ -326,7 +326,7 @@ border-style: solid;
       <property name="geometry">
        <rect>
         <x>390</x>
-        <y>280</y>
+        <y>290</y>
         <width>371</width>
         <height>91</height>
        </rect>
@@ -393,10 +393,10 @@ background-color: rgb(172, 99, 22);</string>
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>470</x>
+        <x>480</x>
         <y>230</y>
-        <width>35</width>
-        <height>10</height>
+        <width>31</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="font">
@@ -431,7 +431,7 @@ background-color: rgb(172, 99, 22);</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>340</y>
+        <y>350</y>
         <width>211</width>
         <height>31</height>
        </rect>
@@ -718,7 +718,7 @@ border-radius:5px;
         <x>30</x>
         <y>20</y>
         <width>211</width>
-        <height>321</height>
+        <height>331</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -800,7 +800,7 @@ color: rgb(161, 164, 163);</string>
         <x>270</x>
         <y>230</y>
         <width>491</width>
-        <height>141</height>
+        <height>151</height>
        </rect>
       </property>
       <property name="font">
@@ -843,7 +843,7 @@ border-color:rgb(172, 99, 22)</string>
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#a1a4a3;&quot;&gt;Estimated time to completion:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_55">
+     <widget class="QLabel" name="speedDispProj">
       <property name="geometry">
        <rect>
         <x>580</x>
@@ -867,7 +867,7 @@ border-color:rgb(172, 99, 22)</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_52">
+     <widget class="QPushButton" name="speedUpProj">
       <property name="geometry">
        <rect>
         <x>670</x>
@@ -921,7 +921,7 @@ border-color:rgb(161, 164, 163);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_53">
+     <widget class="QPushButton" name="speedDownProj">
       <property name="geometry">
        <rect>
         <x>520</x>
@@ -988,10 +988,10 @@ border-color:rgb(172, 99, 22)</string>
      <zorder>FileSelector</zorder>
      <zorder>FileDescription</zorder>
      <zorder>TimeEstimate</zorder>
-     <zorder>label_55</zorder>
-     <zorder>pushButton_52</zorder>
+     <zorder>speedDispProj</zorder>
+     <zorder>speedUpProj</zorder>
      <zorder>label_56</zorder>
-     <zorder>pushButton_53</zorder>
+     <zorder>speedDownProj</zorder>
     </widget>
     <widget class="QWidget" name="Manual">
      <property name="cursor">
@@ -1000,7 +1000,7 @@ border-color:rgb(172, 99, 22)</string>
      <attribute name="title">
       <string>Manual</string>
      </attribute>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="xPos">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -1060,7 +1060,7 @@ border-color:rgb(161, 164, 163);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_8">
+     <widget class="QPushButton" name="yNeg">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -1090,7 +1090,7 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_9">
+     <widget class="QPushButton" name="xNeg">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1120,7 +1120,7 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_7">
+     <widget class="QPushButton" name="yPos">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -1150,28 +1150,26 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_12">
+     <widget class="QPushButton" name="xHome">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>300</y>
+        <x>50</x>
+        <y>310</y>
         <width>51</width>
         <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(22, 27, 34);
+       <string notr="true">background-color: rgba(255, 255, 255, 0);
 border-style: solid;
 border-radius: 10px;
 border-width: 2px;
-border-color:rgb(161, 164, 163);</string>
+border-color:rgb(161, 164, 163);
+font: 14pt &quot;Arial Rounded MT Bold&quot;;
+color:rgb(22, 27, 34);</string>
       </property>
       <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../Icons/Temple.png</normaloff>../Icons/Temple.png</iconset>
+       <string>X</string>
       </property>
       <property name="iconSize">
        <size>
@@ -1183,8 +1181,8 @@ border-color:rgb(161, 164, 163);</string>
      <widget class="QPushButton" name="pushButton_13">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>300</y>
+        <x>50</x>
+        <y>310</y>
         <width>51</width>
         <height>51</height>
        </rect>
@@ -1200,8 +1198,8 @@ border-color:rgb(161, 164, 163);</string>
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>../Icons/Temple.png</normaloff>../Icons/Temple.png</iconset>
+       <iconset resource="icons.qrc">
+        <normaloff>:/new/prefix1/Icons/Home50.png</normaloff>:/new/prefix1/Icons/Home50.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1248,36 +1246,6 @@ border-width: 5px;</string>
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_16">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>300</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(22, 27, 34);
-border-style: solid;
-border-radius: 10px;
-border-width: 2px;
-border-color:rgb(161, 164, 163);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../Icons/Temple.png</normaloff>../Icons/Temple.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>25</width>
-        <height>25</height>
-       </size>
       </property>
      </widget>
      <widget class="QLabel" name="label">
@@ -1335,7 +1303,7 @@ border-color:rgb(172, 99, 22)</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_10">
+     <widget class="QPushButton" name="zPos">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -1365,7 +1333,7 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_11">
+     <widget class="QPushButton" name="zNeg">
       <property name="geometry">
        <rect>
         <x>370</x>
@@ -1505,7 +1473,7 @@ border-width: 5px;</string>
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_19">
+     <widget class="QPushButton" name="thetaCCW">
       <property name="geometry">
        <rect>
         <x>670</x>
@@ -1535,7 +1503,7 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_20">
+     <widget class="QPushButton" name="thetaCW">
       <property name="geometry">
        <rect>
         <x>530</x>
@@ -1565,7 +1533,7 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_36">
+     <widget class="QPushButton" name="speedDownManual">
       <property name="geometry">
        <rect>
         <x>300</x>
@@ -1595,7 +1563,7 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_34">
+     <widget class="QPushButton" name="speedUpManual">
       <property name="geometry">
        <rect>
         <x>440</x>
@@ -1649,7 +1617,7 @@ border-color:rgb(161, 164, 163);</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_30">
+     <widget class="QLabel" name="speedDispManual">
       <property name="geometry">
        <rect>
         <x>360</x>
@@ -1676,8 +1644,8 @@ border-color:rgb(161, 164, 163);</string>
      <widget class="QLabel" name="label_31">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>280</y>
+        <x>30</x>
+        <y>290</y>
         <width>231</width>
         <height>91</height>
        </rect>
@@ -1727,41 +1695,11 @@ border-top-color:rgb(22, 27, 34);</string>
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_17">
-      <property name="geometry">
-       <rect>
-        <x>540</x>
-        <y>300</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(22, 27, 34);
-border-style: solid;
-border-radius: 10px;
-border-width: 2px;
-border-color:rgb(161, 164, 163);</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../Icons/Temple.png</normaloff>../Icons/Temple.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>25</width>
-        <height>25</height>
-       </size>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_33">
       <property name="geometry">
        <rect>
-        <x>520</x>
-        <y>280</y>
+        <x>530</x>
+        <y>290</y>
         <width>231</width>
         <height>91</height>
        </rect>
@@ -1782,11 +1720,11 @@ border-color:rgb(172, 99, 22)</string>
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_14">
+     <widget class="QPushButton" name="servoPower">
       <property name="geometry">
        <rect>
         <x>680</x>
-        <y>300</y>
+        <y>310</y>
         <width>51</width>
         <height>51</height>
        </rect>
@@ -1803,7 +1741,7 @@ border-color:rgb(161, 164, 163);</string>
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../Icons/Temple.png</normaloff>../Icons/Temple.png</iconset>
+        <normaloff>../../../Desktop/a1a4a3-stepper-motor-50.png</normaloff>../../../Desktop/a1a4a3-stepper-motor-50.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1812,11 +1750,39 @@ border-color:rgb(161, 164, 163);</string>
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_15">
+     <widget class="QPushButton" name="yHome">
       <property name="geometry">
        <rect>
-        <x>610</x>
-        <y>300</y>
+        <x>120</x>
+        <y>310</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgba(255, 255, 255, 0);
+border-style: solid;
+border-radius: 10px;
+border-width: 2px;
+border-color:rgb(161, 164, 163);
+font: 14pt &quot;Arial Rounded MT Bold&quot;;
+color:rgb(22, 27, 34);</string>
+      </property>
+      <property name="text">
+       <string>Y</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_17">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>310</y>
         <width>51</width>
         <height>51</height>
        </rect>
@@ -1832,8 +1798,155 @@ border-color:rgb(161, 164, 163);</string>
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>../Icons/Temple.png</normaloff>../Icons/Temple.png</iconset>
+       <iconset resource="icons.qrc">
+        <normaloff>:/new/prefix1/Icons/Home50.png</normaloff>:/new/prefix1/Icons/Home50.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="zHome">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>310</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgba(255, 255, 255, 0);
+border-style: solid;
+border-radius: 10px;
+border-width: 2px;
+border-color:rgb(161, 164, 163);
+font: 14pt &quot;Arial Rounded MT Bold&quot;;
+color:rgb(22, 27, 34);</string>
+      </property>
+      <property name="text">
+       <string>Z</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_19">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>310</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(22, 27, 34);
+border-style: solid;
+border-radius: 10px;
+border-width: 2px;
+border-color:rgb(161, 164, 163);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/new/prefix1/Icons/Home50.png</normaloff>:/new/prefix1/Icons/Home50.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="thetaHome">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>310</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgba(255, 255, 255, 0);
+border-style: solid;
+border-radius: 10px;
+border-width: 2px;
+border-color:rgb(161, 164, 163);
+font: 75 15pt &quot;Symbol&quot;;
+color:rgb(22, 27, 34);
+</string>
+      </property>
+      <property name="text">
+       <string>q</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_21">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>310</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(22, 27, 34);
+border-style: solid;
+border-radius: 10px;
+border-width: 2px;
+border-color:rgb(161, 164, 163);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/new/prefix1/Icons/Home50.png</normaloff>:/new/prefix1/Icons/Home50.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="allHome">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>310</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(22, 27, 34);
+border-style: solid;
+border-radius: 10px;
+border-width: 2px;
+border-color:rgb(161, 164, 163);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/new/prefix1/Icons/Home50.png</normaloff>:/new/prefix1/Icons/Home50.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1843,9 +1956,7 @@ border-color:rgb(161, 164, 163);</string>
       </property>
      </widget>
      <zorder>label_33</zorder>
-     <zorder>pushButton_17</zorder>
-     <zorder>pushButton_15</zorder>
-     <zorder>pushButton_14</zorder>
+     <zorder>servoPower</zorder>
      <zorder>label</zorder>
      <zorder>label_32</zorder>
      <zorder>label_31</zorder>
@@ -1853,26 +1964,32 @@ border-color:rgb(161, 164, 163);</string>
      <zorder>label_12</zorder>
      <zorder>label_2</zorder>
      <zorder>label_4</zorder>
-     <zorder>pushButton_8</zorder>
-     <zorder>pushButton_9</zorder>
-     <zorder>pushButton_7</zorder>
-     <zorder>pushButton_12</zorder>
+     <zorder>yNeg</zorder>
+     <zorder>xNeg</zorder>
+     <zorder>yPos</zorder>
      <zorder>pushButton_13</zorder>
-     <zorder>pushButton_16</zorder>
-     <zorder>pushButton_6</zorder>
-     <zorder>pushButton_10</zorder>
-     <zorder>pushButton_11</zorder>
+     <zorder>xPos</zorder>
+     <zorder>zPos</zorder>
+     <zorder>zNeg</zorder>
      <zorder>label_34</zorder>
      <zorder>label_5</zorder>
      <zorder>label_15</zorder>
      <zorder>label_14</zorder>
      <zorder>label_13</zorder>
-     <zorder>pushButton_19</zorder>
-     <zorder>pushButton_20</zorder>
-     <zorder>pushButton_36</zorder>
-     <zorder>pushButton_34</zorder>
+     <zorder>thetaCCW</zorder>
+     <zorder>thetaCW</zorder>
+     <zorder>speedDownManual</zorder>
+     <zorder>speedUpManual</zorder>
      <zorder>label_11</zorder>
-     <zorder>label_30</zorder>
+     <zorder>speedDispManual</zorder>
+     <zorder>xHome</zorder>
+     <zorder>pushButton_17</zorder>
+     <zorder>pushButton_19</zorder>
+     <zorder>pushButton_21</zorder>
+     <zorder>yHome</zorder>
+     <zorder>zHome</zorder>
+     <zorder>thetaHome</zorder>
+     <zorder>allHome</zorder>
     </widget>
     <widget class="QWidget" name="Error">
      <property name="sizePolicy">
@@ -1887,13 +2004,13 @@ border-color:rgb(161, 164, 163);</string>
      <attribute name="title">
       <string>Error Dialogue</string>
      </attribute>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="errorDisp">
       <property name="geometry">
        <rect>
         <x>30</x>
         <y>20</y>
         <width>731</width>
-        <height>351</height>
+        <height>361</height>
        </rect>
       </property>
       <property name="font">

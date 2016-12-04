@@ -23,6 +23,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.LoadFile.clicked.connect(self.loadFile)
         self.FileSelector.itemClicked.connect(self.dispMeta)
 
+        # Manual page connections
+
+
         #Link up to loaded files
         #print(os.listdir(self.saveDir))
 
