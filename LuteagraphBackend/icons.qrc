@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>Icons/Crosshair36.png</file>
+        <file>Icons/Hand36.png</file>
+        <file>Icons/Pig30.png</file>
+        <file>Icons/Pig80.png</file>
+        <file>Icons/Pig120.png</file>
+        <file>Icons/Plus25_whitish.png</file>
+        <file>Icons/Plus30.png</file>
+        <file>Icons/Plus36.png</file>
+        <file>Icons/Down50.png</file>
+        <file>Icons/Left50.png</file>
+        <file>Icons/Right50.png</file>
+        <file>Icons/Up50.png</file>
+        <file>Icons/Down50W.png</file>
+        <file>Icons/Left50W.png</file>
+        <file>Icons/Right50W.png</file>
+        <file>Icons/Up50W.png</file>
+    </qresource>
+</RCC>
