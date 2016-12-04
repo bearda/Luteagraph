@@ -16,5 +16,7 @@
         <file>Icons/Left50W.png</file>
         <file>Icons/Right50W.png</file>
         <file>Icons/Up50W.png</file>
+        <file>Icons/Home50.png</file>
+        <file>Icons/Stepper50.png</file>
     </qresource>
 </RCC>
