@@ -48,9 +48,9 @@
 /* Delay between commands in milliseconds */
 #define CMD_TO_CMD_DELAY  (500u)
  
-static uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size);
-static void SPIS_CleanupAfterRead(void);
-static void SPIS_UpdateStatus(uint32 status);
+uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size);
+void SPIS_CleanupAfterRead(void);
+void SPIS_UpdateStatus(uint32 status);
 
     
 #endif

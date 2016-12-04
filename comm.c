@@ -26,7 +26,7 @@ uint8 bigBuf[255];
 uint8 bigBufLoc = 0;
 uint8 remaining_packets = 0;
 
-static uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
+uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
 {
     //uint8 headBuffer[HEADER_SIZE];    
     
@@ -99,18 +99,19 @@ static uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
 *  None
 *
 *******************************************************************************/
-static void SPIS_CleanupAfterRead(void)
+void SPIS_CleanupAfterRead(void)
 {
     /* Wait for the end of the transfer */
-    while (transmit_size != SPIS_SpiUartGetRxBufferSize())
-    {
-    }
+    //while (transmit_size != SPIS_SpiUartGetRxBufferSize())
+    //{
+    //}
 
     /* Clear RX buffer from dummy bytes */
     SPIS_SpiUartClearRxBuffer();
 
     /* Put dummy data into TX buffer to be transmitted to SPIM */
-    SPIS_SpiUartPutArray(zeroBuffer, PACKET_SIZE);
+    uint8 tmpBuf[8] = {'h','e','l','l','o','!','!','1'};
+    SPIS_SpiUartPutArray(tmpBuf, 8u);
 }
 
 /*******************************************************************************
@@ -126,7 +127,7 @@ static void SPIS_CleanupAfterRead(void)
 *  None
 *
 *******************************************************************************/
-static void SPIS_UpdateStatus(uint32 status)
+void SPIS_UpdateStatus(uint32 status)
 {
     static uint8 sTxBuffer[PACKET_SIZE] = {32, STS_CMD_FAIL, 32};
 

@@ -96,7 +96,7 @@ CY_ISR(InterruptHandler)
         }
     }
     
-    //write one pulse for 1 micro second
+    //write one pulse for 50 micro seconds
     if (pulse_table[pulse_table_loc].pulse_bits & X_USE_MASK)
     //if (pulse_table_loc < pulse_table_size)
     {
@@ -117,19 +117,46 @@ CY_ISR(InterruptHandler)
         }
 
     }
+    //write one pulse for 50 micro seconds
     if (pulse_table[pulse_table_loc].pulse_bits & Y_USE_MASK)
+    //if (pulse_table_loc < pulse_table_size)
     {
-        if (pulse_table[pulse_table_loc].pulse_bits & Y_DIR_MASK)
+        if (pulse_table[pulse_table_loc].pulse_bits & Y_DIR_MASK && !y_limit_Read())
         //if(pulse_table_loc < pulse_table_size/2)
         {
             y_dir_output_pin_Write (1u);
+            y_pulse_output_pin_Write(1u);
+            y_cur_loc++;
+
         }
-        else
+        else if ((pulse_table[pulse_table_loc].pulse_bits & Y_DIR_MASK) == 0)
         {
             y_dir_output_pin_Write (0u);
+            y_pulse_output_pin_Write(1u);
+            y_cur_loc--;
+
         }
-        y_pulse_output_pin_Write(1u);
-        //y_dir_output_pin_Write ((pulse_table[pulse_table_loc].pulse_bits & Y_DIR_MASK) >> (PBIT_DIR + PBIT_Y_LOC));
+
+    }
+        //write one pulse for 50 micro seconds
+    if (pulse_table[pulse_table_loc].pulse_bits & Z_USE_MASK)
+    //if (pulse_table_loc < pulse_table_size)
+    {
+        if (pulse_table[pulse_table_loc].pulse_bits & Z_DIR_MASK && !z_limit_Read())
+        //if(pulse_table_loc < pulse_table_size/2)
+        {
+            z_dir_output_pin_Write (1u);
+            z_pulse_output_pin_Write(1u);
+            z_cur_loc++;
+
+        }
+        else if ((pulse_table[pulse_table_loc].pulse_bits & Z_DIR_MASK) == 0)
+        {
+            z_dir_output_pin_Write (0u);
+            z_pulse_output_pin_Write(1u);
+            z_cur_loc--;
+
+        }
 
     }
     //LED_BLUE_Write(1u);
@@ -137,6 +164,9 @@ CY_ISR(InterruptHandler)
     x_pulse_output_pin_Write(0u);
     x_dir_output_pin_Write (0u);
     y_pulse_output_pin_Write(0u);
+    y_dir_output_pin_Write (0u);
+    z_pulse_output_pin_Write(0u);
+    z_dir_output_pin_Write (0u);
 
     
     //set the timer
@@ -153,6 +183,9 @@ int main()
     #if (CY_PSOC4_4000)
         CySysWdtDisable();
     #endif /* (CY_PSOC4_4000) */
+    
+    uint8 buf[256];
+    int read_size = 8;
        
     x_on_Write(1u);
 
@@ -166,17 +199,18 @@ int main()
     /* Enable interrupt component connected to interrupt */
     pulse_table_init();
     initGCode();
+    SPIS_CleanupAfterRead();
     //saveGCodeToFlash(sampGCode, strlen(sampGCode) + 1);
     //runNextGCodeCommand(&tar_x, &tar_y, &tar_z);
     autoHome();
     
     Timer_1_Start();
 
-
-    
-
     for(;;)
     {
+        SPIS_WaitForCommand(buf, read_size);
+        SPIS_UpdateStatus(0);
+        SPIS_CleanupAfterRead();
     }
 }
 
