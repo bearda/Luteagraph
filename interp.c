@@ -14,7 +14,7 @@
 #include <math.h>
 
 #include "interp.h"
-
+#include "bit_offsets.h"
 
 
 //we only want to go 1000 pulses in one second.
