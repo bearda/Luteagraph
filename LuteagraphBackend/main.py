@@ -13,7 +13,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     saveDir = r'/home/cashe/Desktop/Projects'
     bus = 0
     device = 0
-    readDelay = 0.015
+    readDelay = 0.001
     jogIndex = 2
     jogSpeeds = [0.1, 0.5, 1, 5, 10, 50]
     binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
@@ -155,11 +155,22 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.errorDisp.setText(temp + '\n' + timeOfError + text)
 
+    def waitForComplete(self, cmdType, timeOut):
+        count = 0
+        while(count < timeOut)
+            sleep(self.readDelay)
+            received = self.spi.readbytes(2)
+            if received[0] == cmdType:
+                return received
+            else
+                count = count + 1
+        return -1
+
     def homeX(self):
         res = self.spi.xfer([self.home, 0b10000000])
         print(str(res))
         sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        received = self.waitForComplete(self.home, 1000)
         print(str(received))
         if received == [self.home, 0x00]:
             pass
