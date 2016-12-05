@@ -157,20 +157,22 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def waitForComplete(self, cmdType, timeOut):
         count = 0
-        while(count < timeOut)
+        while(count < timeOut):
             sleep(self.readDelay)
             received = self.spi.readbytes(2)
+            print('ins: '+str(received))
             if received[0] == cmdType:
                 return received
-            else
+            else:
                 count = count + 1
         return -1
 
     def homeX(self):
+        self.xHome.setEnabled(0)
         res = self.spi.xfer([self.home, 0b10000000])
         print(str(res))
         sleep(self.readDelay)
-        received = self.waitForComplete(self.home, 1000)
+        received = self.waitForComplete(self.home, 4000)
         print(str(received))
         if received == [self.home, 0x00]:
             pass
@@ -178,6 +180,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.throwError("Received X home error.")
         else:
             self.throwError("Received nonsense response when attempting to home the X axis.")
+        self.xHome.setEnabled(1)
 
     def homeY(self):
         self.spi.xfer([self.home, 0b01000000])
