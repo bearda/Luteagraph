@@ -5,6 +5,7 @@ from mainwindow import Ui_MainWindow
 from shutil import copy2
 import datetime
 import spidev
+from time import sleep
 
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
@@ -18,11 +19,11 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         
         # Initialize SPI
-	spi = spidev.SpiDev()
-	spi.open(bus, device)
+        self.spi = spidev.SpiDev()
+        self.spi.open(self.bus, self.device)
 
-	#recieved = spi.xfer(to_send)
-	#print(str(recieved))
+   #recieved = spi.xfer(to_send)
+   #print(str(recieved))
         
 
         # Home page connections
@@ -34,7 +35,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.FileSelector.itemClicked.connect(self.dispMeta)
 
         # Manual page connections
-	self.xHome.clicked.connect(self.homeX)
+        self.xHome.clicked.connect(self.homeX)
 
         #Link up to loaded files
         #print(os.listdir(self.saveDir))
@@ -112,9 +113,11 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def homeX(self):
         data = [0x03, 0b10000000]
-        spi.xfer(data)
-	recieved = spi.readbytes(2)
-        print(recieved)
+        duringx = self.spi.xfer(data)
+        print('during tx: ' + str(duringx))
+        sleep(0.001)
+        recieved = self.spi.readbytes(2)
+        print('recieved: ' + str(recieved))
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
