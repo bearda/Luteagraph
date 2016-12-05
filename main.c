@@ -212,6 +212,7 @@ int main()
     {
         cmd = SPIS_WaitForCommand(buf, buf_size);
         //execute command
+        executeCmd(cmd, buf);
         //reply to command
         uint8 reply[2] = {0x03, 0x0};
         SPIS_SendReply(reply, 2);
