@@ -13,7 +13,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     saveDir = r'/home/cashe/Desktop/Projects'
     bus = 0
     device = 0
-    readDelay = 0.001
+    readDelay = 0.015
     jogIndex = 2
     jogSpeeds = [0.1, 0.5, 1, 5, 10, 50]
     binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
@@ -47,7 +47,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.thetaHome.clicked.connect(self.zeroTheta)
         self.allHome.clicked.connect(self.homeAll)
         self.servoPower.clicked.connect(self.toggleServos)
-        self.speedDownManual.clicked.onnect(self.manualDecelerate)
+        self.speedDownManual.clicked.connect(self.manualDecelerate)
         self.speedUpManual.clicked.connect(self.manualAccelerate)
         self.xNeg.clicked.connect(self.jogXNeg)
         self.xPos.clicked.connect(self.jogXPos)
@@ -72,30 +72,33 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def loadFile(self):
         file = QtWidgets.QFileDialog.getOpenFileName(parent=self.parent(), caption='Select a Gcode file to upload to the project list.')
-        copy2(file[0], self.saveDir)
-        fileName = str.split(file[0], '/')[-1]
-        self.fileList.append(fileName)
-        item = QtWidgets.QListWidgetItem(self.fileList[-1])
-        self.FileSelector.addItem(item)
+        try:
+            copy2(file[0], self.saveDir)
+            fileName = str.split(file[0], '/')[-1]
+            self.fileList.append(fileName)
+            item = QtWidgets.QListWidgetItem(self.fileList[-1])
+            self.FileSelector.addItem(item)
 
-        dateUpload = datetime.datetime.now()
-        if dateUpload.hour > 11:
-            period = ' PM'
-            if dateUpload.hour == 12:
-                hour = '12'
+            dateUpload = datetime.datetime.now()
+            if dateUpload.hour > 11:
+                period = ' PM'
+                if dateUpload.hour == 12:
+                    hour = '12'
+                else:
+                    hour = str(dateUpload.hour - 11)
             else:
-                hour = str(dateUpload.hour - 11)
-        else:
-            hour = str(dateUpload.hour)
-            period = ' AM'
-        dateUpload = str(dateUpload.month) + '/' + str(dateUpload.day) + '/' + str(
-            dateUpload.year) + ' ' + hour + ':' + str(dateUpload.minute) + period
+                hour = str(dateUpload.hour)
+                period = ' AM'
+            dateUpload = str(dateUpload.month) + '/' + str(dateUpload.day) + '/' + str(
+                dateUpload.year) + ' ' + hour + ':' + str(dateUpload.minute) + period
 
-        if fileName not in self.metaDict.keys():
-            self.metaDict[fileName] = dateUpload
+            if fileName not in self.metaDict.keys():
+                self.metaDict[fileName] = dateUpload
+        except:
+            pass
 
     def dispMeta(self, name):
-        path = self.saveDir + '\\' + name.text()
+        path = self.saveDir + '/' + name.text()
         sizeBytes = os.path.getsize(path)
         dateModified = datetime.datetime.fromtimestamp(os.path.getmtime(path))
 
@@ -153,9 +156,11 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.errorDisp.setText(temp + '\n' + timeOfError + text)
 
     def homeX(self):
-        self.spi.xfer([self.home, 0b10000000])
+        res = self.spi.xfer([self.home, 0b10000000])
+        print(str(res))
         sleep(self.readDelay)
         received = self.spi.readbytes(2)
+        print(str(received))
         if received == [self.home, 0x00]:
             pass
         elif received == [self.home, 0x01]:
@@ -167,6 +172,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.spi.xfer([self.home, 0b01000000])
         sleep(self.readDelay)
         received = self.spi.readbytes(2)
+        print(str(received))
         if received == [self.home, 0x00]:
             pass
         elif received == [self.home, 0x01]:
@@ -178,6 +184,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.spi.xfer([self.home, 0b00100000])
         sleep(self.readDelay)
         received = self.spi.readbytes(2)
+        print(str(received))
         if received == [self.home, 0x00]:
             pass
         elif received == [self.home, 0x01]:
@@ -189,7 +196,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         yes = 0x00004000
         #no = 0x00010000
         zeroMsg = QtWidgets.QMessageBox()
-        zeroMsg.setText("You are about to set the current Theta axis position as the zero position. Before continuing, ensure that the tool is parallel to the side walls of the machine. Do you wish to proceed with zeroing Theta?")
+        zeroMsg.setText("You are about to set the current Theta axis position as the zero position. Before continuing, ensure that the tool is PARALLEL to the side walls of the machine. Do you wish to proceed with zeroing Theta?")
         zeroMsg.addButton(QtWidgets.QMessageBox.Yes)
         zeroMsg.addButton(QtWidgets.QMessageBox.No)
         received = zeroMsg.exec_()
@@ -208,10 +215,10 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         received = self.spi.readbytes(20)
 
         if received[18] > 0b00001111: #if one is on
-            received = self.spi.xfer(self.servo, 0x00) #turn all off
+            received = self.spi.xfer([self.servo, 0x00]) #turn all off
             power = 0
         else:
-            received = self.spi.xfer(self.servo, 0b11110000) #turn all on
+            received = self.spi.xfer([self.servo, 0b11110000]) #turn all on
             power = 1
 
         if received == [self.servoPower, 0x00]:
@@ -226,12 +233,13 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.throwError("Received nonsense response when attempting to turn off all servos.")
 
     def manualAccelerate(self):
-        if self.jogIndex < len(self.jogSpeeds):
+        if self.jogIndex < len(self.jogSpeeds) - 1:
             self.jogIndex = self.jogIndex + 1
 
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
         self.speedDispManual.setPalette(pallete)
+        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
         self.speedDispManual.setText(str(self.jogSpeeds[self.jogIndex]) + ' mm')
 
     def manualDecelerate(self):
@@ -241,6 +249,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
         self.speedDispManual.setPalette(pallete)
+        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
         self.speedDispManual.setText(str(self.jogSpeeds[self.jogIndex]) + ' mm')
 
     def jogXNeg(self):
