@@ -14,6 +14,7 @@
     
 #include <project.h>
     
+    
 enum
 {
     cmd_gcode = 1,
@@ -40,9 +41,6 @@ void execute_jog(uint8* buf, uint32 buflen);
 
 //homes motors
 void execute_home(uint8* buf, uint32 buflen);
-
-//sends back diagnostics
-void execute_diag(uint8* buf, uint32 buflen);
 
 //turns motors on and off.
 void execute_pwr(uint8* buf, uint32 buflen);

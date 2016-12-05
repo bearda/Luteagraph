@@ -16,6 +16,7 @@
 #include "comm.h"
 #include "autoHome.h"
 #include "interp.h"
+#include "diag.h"
 
 //This executes one of the commands in the enum.
 //WARNING: this will overwrite any data in buf.
@@ -33,7 +34,7 @@ void executeCmd(char cmd, uint8 *buf, uint32 buflen)
             execute_home(buf, buflen);
             break;
         case cmd_diag :
-            execute_diag(buf, buflen);
+            execute_diag();
             break;
         case cmd_pwr :
             execute_pwr(buf, buflen);
@@ -59,12 +60,6 @@ void execute_home(uint8* buf, uint32 buflen)
 {
     //TODO: home axises independantly of each other.
     autoHome();
-    return;
-}
-
-//sends back 20 bytes of diagnostics
-void execute_diag(uint8* buf, uint32 buflen)
-{
     return;
 }
 
