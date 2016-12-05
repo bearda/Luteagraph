@@ -16,7 +16,7 @@
      
 /* Packet size */
 #define PACKET_SIZE      (3u)
-#define HEADER_SIZE      (3u)
+#define HEADER_SIZE      (2u)
 
 /* Byte position within the packet */
 #define PACKET_SOP_POS  (0u)
@@ -51,6 +51,7 @@
 uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size);
 void SPIS_CleanupAfterRead(void);
 void SPIS_UpdateStatus(uint32 status);
+void SPIS_SendReply(uint8 *buffer, uint32 read_size);
 
     
 #endif

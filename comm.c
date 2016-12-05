@@ -36,13 +36,20 @@ uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
 
     //wait for header
     /* Wait for the end of the transfer */
-    while (read_size != SPIS_SpiUartGetRxBufferSize())
+    if (read_size >= HEADER_SIZE)
     {
+        while (HEADER_SIZE > SPIS_SpiUartGetRxBufferSize())
+        {
+        }
+    }
+    else
+    {
+        return CMD_SET_UNKNOWN;
     }
 
     //read header
-    i = 0u;
-    while (0u != SPIS_SpiUartGetRxBufferSize())
+    i = 0;
+    while (0 != SPIS_SpiUartGetRxBufferSize() && i < HEADER_SIZE)
     {
         buf[i] = SPIS_SpiUartReadRxData();
         i++;
@@ -55,30 +62,23 @@ uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
     
     
     //wait for body
-    //while (packet_length != SPIS_SpiUartGetRxBufferSize())
-    //{
-    //}
-    //read body.
-    /* Read packet from the buffer */
-    //i = 0u;
-    //while (0u != SPIS_SpiUartGetRxBufferSize())
-    //{
-    //    buf[i] = SPIS_SpiUartReadRxData();
-    //    i++;
-    //}
-
-    /* Check start and end of packet markers */
-    //if ((tmpBuffer[PACKET_SOP_POS] == PACKET_SOP) &&
-    //    (tmpBuffer[PACKET_EOP_POS] == PACKET_EOP))
-    //{
-    //    /* Return command */
-    //    cmd = tmpBuffer[PACKET_CMD_POS];
-    //}
-    //else
-    //{
-    //    /* Incorrect packet format, return unknown command */
-    //    cmd = CMD_SET_UNKNOWN;
-    //}
+//    if (read_size >= HEADER_SIZE + packet_length)
+//    {
+//        while (packet_length > SPIS_SpiUartGetRxBufferSize())
+//        {
+//        }
+//    }
+//    else
+//    {
+//        return CMD_SET_UNKNOWN;
+//    }
+//    
+//    //read body.
+//    while (0 != SPIS_SpiUartGetRxBufferSize() && i < packet_length + HEADER_SIZE)
+//    {
+//        buf[i] = SPIS_SpiUartReadRxData();
+//        i++;
+//    }
 
     return (cmd);
 }
@@ -143,7 +143,21 @@ void SPIS_UpdateStatus(uint32 status)
     }
     else
     {
-        SPIS_SpiUartPutArray(sTxBuffer, PACKET_SIZE);
     }
 }
+
+void SPIS_SendReply(uint8 *buffer, uint32 read_size)
+{
+    SPIS_SpiUartClearTxBuffer();
+    SPIS_SpiUartPutArray(buffer, read_size);
+    
+    //cleanup
+    while (read_size != SPIS_SpiUartGetRxBufferSize())
+    {
+    }
+    
+    /* Clear RX buffer from dummy bytes */
+    SPIS_SpiUartClearRxBuffer();
+}
+
 /* [] END OF FILE */

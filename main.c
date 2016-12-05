@@ -179,13 +179,15 @@ CY_ISR(InterruptHandler)
 
 int main()
 {   
+    char cmd;
+    uint8 buf[256];
+    int buf_size = 256;
     
     #if (CY_PSOC4_4000)
         CySysWdtDisable();
     #endif /* (CY_PSOC4_4000) */
     
-    uint8 buf[256];
-    int read_size = 8;
+
        
     x_on_Write(1u);
 
@@ -199,18 +201,22 @@ int main()
     /* Enable interrupt component connected to interrupt */
     pulse_table_init();
     initGCode();
+    SPIS_Start();
     SPIS_CleanupAfterRead();
     //saveGCodeToFlash(sampGCode, strlen(sampGCode) + 1);
     //runNextGCodeCommand(&tar_x, &tar_y, &tar_z);
-    autoHome();
     
-    Timer_1_Start();
+    //Timer_1_Start();
 
     for(;;)
     {
-        SPIS_WaitForCommand(buf, read_size);
-        SPIS_UpdateStatus(0);
-        SPIS_CleanupAfterRead();
+        cmd = SPIS_WaitForCommand(buf, buf_size);
+        //execute command
+        //reply to command
+        uint8 reply[2] = {0x03, 0x0};
+        SPIS_SendReply(reply, 2);
+        //SPIS_UpdateStatus(0);
+        //SPIS_CleanupAfterRead();
     }
 }
 
