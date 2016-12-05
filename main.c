@@ -174,6 +174,15 @@ CY_ISR(InterruptHandler)
     //set the timer
     Timer_1_WritePeriod(pulse_table[pulse_table_loc].delta_t);
     pulse_table_loc = pulse_table_loc + 1;
+    
+    //check autohoming.
+    if (autoHoming())
+    {
+        if (x_limit_Read())
+        {
+            autoHomeComplete();
+        }
+    }
 }
 
 //this has been multiplied by 1000. be warned.
@@ -204,7 +213,7 @@ int main()
     pulse_table_init();
     initGCode();
     SPIS_Start();
-    SPIS_CleanupAfterRead();
+    //SPIS_CleanupAfterRead();
     //saveGCodeToFlash(sampGCode, strlen(sampGCode) + 1);
     //runNextGCodeCommand(&tar_x, &tar_y, &tar_z);
     

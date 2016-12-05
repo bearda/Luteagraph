@@ -20,14 +20,11 @@
 
 /* Byte position within the packet */
 #define PACKET_SOP_POS  (0u)
-#define PACKET_CMD_POS  (1u)
 
 #define PACKET_TYPE_LOC     (0u)
-#define PACKET_LENGTH_LOC   (1u)
-#define PACKET_CHECKSUM_LOC (2u)
-
+#define PACKET_DATA_LOC  (1u)
+    
 /* Command and status share the same offset */
-#define PACKET_STS_POS  (PACKET_CMD_POS)
 #define PACKET_EOP_POS  (2u)
 
 /* Start and end of the packet markers */

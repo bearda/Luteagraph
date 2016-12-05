@@ -13,6 +13,7 @@
 #include <project.h>
 
 #include "diag.h"
+#include "comm.h"
 
 extern int x_cur_loc; //represents the current location on the x axis. 18000 is the limit switch, zero is as far as we should go in the other direction.
 extern int y_cur_loc;
@@ -36,7 +37,7 @@ void execute_diag()
     msg.limit_switches = 0xF0;
     msg.servo_on = 0xF0;
     
-    
+    SPIS_SendReply( (uint8 *) &msg, sizeof(msg));
 }
 
 /* [] END OF FILE */

@@ -30,6 +30,6 @@
 #define Y_DIR_MASK (1 << (PBIT_DIR + PBIT_Y_LOC))
 #define Z_DIR_MASK (1 << (PBIT_DIR + PBIT_Z_LOC))
 #define T_DIR_MASK (1 << (PBIT_DIR + PBIT_T_LOC))
-
+    
 #endif
 /* [] END OF FILE */

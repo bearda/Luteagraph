@@ -237,20 +237,24 @@ int runNextGCodeCommand( float *tar_x, float *tar_y, float *tar_z)
     pulse_table_init();
     if (autoHoming())
     {
-        //so we are autohoming. Is the limit switch active?
-        if (x_limit_Read())
-        {
-            //we have voltage! stop autohoming.
-            autoHomeComplete();
-            //we will now begin processing GCode as normal
-        }
-        else
-        {
-            //just keep swimming.
-            *tar_x += 0.1;
-            return linear_interp(getPrevX() + 1,-1,-1);
-
-        }
+//        //so we are autohoming. Is the limit switch active?
+//        if (x_limit_Read())
+//        {
+//            //we have voltage! stop autohoming.
+//            autoHomeComplete();
+//            //we will now begin processing GCode as normal
+//        }
+//        else
+//        {
+//            //just keep swimming.
+//            *tar_x += 0.1;
+//            return linear_interp(getPrevX() + 1,-1,-1);
+//
+//        }
+    
+        //just keep swimming.
+        *tar_x += 0.1;
+        return linear_interp(getPrevX() + 1,-1,-1);
     }
     if (GCode_loc < strlen(GCode_buffer))
     {

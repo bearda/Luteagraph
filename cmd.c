@@ -68,6 +68,9 @@ void execute_home(uint8* buf, uint32 buflen)
 //turns motors on and off.
 void execute_pwr(uint8* buf, uint32 buflen)
 {
+    char power_bits;
+    
+    power_bits = buf[PACKET_DATA_LOC];
     return;
 }
 

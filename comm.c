@@ -32,7 +32,7 @@ uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
     
     uint32 cmd;
     uint32 i;
-    uint32 packet_length;
+    //uint32 packet_length;
 
     //wait for header
     /* Wait for the end of the transfer */
@@ -56,7 +56,7 @@ uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
     }
     
     cmd = buf[PACKET_TYPE_LOC];
-    packet_length = buf[PACKET_LENGTH_LOC];
+    //packet_length = buf[PACKET_LENGTH_LOC];
     
     
     
@@ -114,45 +114,13 @@ void SPIS_CleanupAfterRead(void)
     SPIS_SpiUartPutArray(tmpBuf, 8u);
 }
 
-/*******************************************************************************
-* Function Name: SPIS_UpdateStatus
-********************************************************************************
-* Summary:
-*  SPIS copies packet with response into the buffer.
-*
-* Parameters:
-*  status - status to insert into the response packet.
-*
-* Return:
-*  None
-*
-*******************************************************************************/
-void SPIS_UpdateStatus(uint32 status)
-{
-    static uint8 sTxBuffer[PACKET_SIZE] = {32, STS_CMD_FAIL, 32};
-
-    sTxBuffer[PACKET_STS_POS] = (uint8) remaining_packets + 48;
-
-    /* Put data into the slave TX buffer to be transferred while following
-    * master access.
-    */
-    if (status == 111)
-    {
-        uint8 tmpBuf[8] = {'h','e','l','l','o','!','!','1'};
-        SPIS_SpiUartPutArray(tmpBuf, 8u);
-    }
-    else
-    {
-    }
-}
 
 void SPIS_SendReply(uint8 *buffer, uint32 read_size)
 {
-    SPIS_SpiUartClearTxBuffer();
     SPIS_SpiUartPutArray(buffer, read_size);
     
     //cleanup
-    while (read_size != SPIS_SpiUartGetRxBufferSize())
+    while (0 != SPIS_SpiUartGetTxBufferSize())
     {
     }
     
