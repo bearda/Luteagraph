@@ -117,7 +117,7 @@ int deGCode(char * command, float * X_G, float * Y_G, float * Z_G)
     //look at the first character. If it is a space, we are using the previous GCode.
     if (command[0] == ' ')
     {
-        retval = NO_GCODE;
+        retval = current_GCode;
         commandLoc += 1;
     }
     else
@@ -136,6 +136,7 @@ int deGCode(char * command, float * X_G, float * Y_G, float * Z_G)
         }
         else
         {
+            current_GCode = GCODE_UNKNOWN;
             return GCODE_UNKNOWN;
         }
 
@@ -255,7 +256,14 @@ int runNextGCodeCommand( float *tar_x, float *tar_y, float *tar_z)
     {
         readGcodeLine(GCode_buffer, &GCode_loc, strlen(GCode_buffer), line, 64);
         code = deGCode(line, tar_x, tar_y, tar_z);
-        return linear_interp(mm_to_pulses(*tar_x), mm_to_pulses(*tar_y), mm_to_pulses(*tar_z));
+        if (code == GCODE_UNKNOWN)
+        {
+            return 0;
+        }
+        else
+        {
+            return linear_interp(mm_to_pulses(*tar_x), mm_to_pulses(*tar_y), mm_to_pulses(*tar_z));
+        }
     }
     return -1;
     
