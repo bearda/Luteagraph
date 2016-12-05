@@ -39,6 +39,8 @@ void executeCmd(char cmd, uint8 *buf, uint32 buflen)
         case cmd_pwr :
             execute_pwr(buf, buflen);
             break;
+        default :
+            return;
     }
 }
 

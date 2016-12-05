@@ -17,6 +17,7 @@
     
 enum
 {
+    cmd_unknown = 0,
     cmd_gcode = 1,
     cmd_jog = 2,
     cmd_home = 3,
