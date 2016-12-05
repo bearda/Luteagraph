@@ -10,21 +10,27 @@ from time import sleep
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
     metaDict = {}
-    saveDir = r'C:\Users\samke\Desktop\Tester'
+    saveDir = r'/home/cashe/Desktop/Projects'
     bus = 0
     device = 0
+    readDelay = 0.001
+    jogIndex = 2
+    jogSpeeds = [0.1, 0.5, 1, 5, 10, 50]
+    binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
 
-    def __init__(self, parent=None, name=None):
+    # Commands
+    jog = 0x02
+    home = 0x03
+    diagnostic = [0x04, 0x00]
+    servo = 0x05
+
+    def __init__(self, parent=None,):
         super(MyWindowClass, self).__init__(parent)
         self.setupUi(self)
         
         # Initialize SPI
         self.spi = spidev.SpiDev()
         self.spi.open(self.bus, self.device)
-
-   #recieved = spi.xfer(to_send)
-   #print(str(recieved))
-        
 
         # Home page connections
         self.JumpProject.clicked.connect(self.jump2Project)
@@ -36,12 +42,26 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Manual page connections
         self.xHome.clicked.connect(self.homeX)
+        self.yHome.clicked.connect(self.homeY)
+        self.zHome.clicked.connect(self.homeZ)
+        self.thetaHome.clicked.connect(self.zeroTheta)
+        self.allHome.clicked.connect(self.homeAll)
+        self.servoPower.clicked.connect(self.toggleServos)
+        self.speedDownManual.clicked.onnect(self.manualDecelerate)
+        self.speedUpManual.clicked.connect(self.manualAccelerate)
+        self.xNeg.clicked.connect(self.jogXNeg)
+        self.xPos.clicked.connect(self.jogXPos)
+        self.yNeg.clicked.connect(self.jogYNeg)
+        self.yPos.clicked.connect(self.jogYPos)
+        self.zNeg.clicked.connect(self.jogZNeg)
+        self.zPos.clicked.connect(self.jogZPos)
+        self.thetaCCW.clicked.connect(self.jogThetaCCW)
+        self.thetaCW.clicked.connect(self.jogThetaCW)
 
         #Link up to loaded files
         #print(os.listdir(self.saveDir))
 
         #Create metadata file
-
 
 
     def jump2Project(self):
@@ -59,9 +79,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.FileSelector.addItem(item)
 
         dateUpload = datetime.datetime.now()
-        if (dateUpload.hour > 11):
+        if dateUpload.hour > 11:
             period = ' PM'
-            if (dateUpload.hour == 12):
+            if dateUpload.hour == 12:
                 hour = '12'
             else:
                 hour = str(dateUpload.hour - 11)
@@ -79,7 +99,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         sizeBytes = os.path.getsize(path)
         dateModified = datetime.datetime.fromtimestamp(os.path.getmtime(path))
 
-        if (dateModified.hour > 11):
+        if dateModified.hour > 11:
             period = ' PM'
             if (dateModified.hour == 12):
                 hour = '12'
@@ -91,33 +111,253 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         dateModified = str(dateModified.month) + '/' + str(dateModified.day) + '/' + str(
             dateModified.year) + ' ' + hour + ':' + str(dateModified.minute) + period
 
-
-
-        if (sizeBytes > 1000000):
+        if sizeBytes > 1000000:
             sizeBytes = str(round(float(sizeBytes) / 1000000, 2)) + ' MB'
         elif (sizeBytes > 1000):
             sizeBytes = str(round(float(sizeBytes) / 1000, 2)) + ' KB'
         else:
             sizeBytes = str(sizeBytes) + ' bytes'
 
-        print(name.text())
-        print(self.metaDict.keys())
-        pallete = QtGui.QPalette()
-        pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161,164,163))
-        self.FileDescription.setPalette(pallete)
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161,164,163))
+        self.FileDescription.setPalette(palette)
 
         self.FileDescription.setText('File path: ' + path + '\n\n' +
                                      'File size: ' + sizeBytes + '\n\n' +
                                      'Date last modified: ' + dateModified + '\n\n' +
                                      'Date uploaded: ' + self.metaDict[name.text()])
 
+    def throwError(self, text):
+        pallete = QtGui.QPalette()
+        pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
+        self.errorDisp.setPalette(pallete)
+        if self.errorDisp.text() == "There are currently no errors.":
+            self.errorDisp.clear()
+        temp = self.errorDisp.text()
+
+        timeOfError = datetime.datetime.now()
+        if timeOfError.hour > 11:
+            period = ' PM'
+            if timeOfError.hour == 12:
+                hour = '12'
+            else:
+                hour = str(timeOfError.hour - 11)
+        else:
+            hour = str(timeOfError.hour)
+            period = ' AM'
+        timeOfError = hour + ':' + str(timeOfError.minute) + period + ' - '
+
+        if temp == '':
+            self.errorDisp.setText(timeOfError + text)
+        else:
+            self.errorDisp.setText(temp + '\n' + timeOfError + text)
+
     def homeX(self):
-        data = [0x03, 0b10000000]
-        duringx = self.spi.xfer(data)
-        print('during tx: ' + str(duringx))
-        sleep(0.001)
-        recieved = self.spi.readbytes(2)
-        print('recieved: ' + str(recieved))
+        self.spi.xfer([self.home, 0b10000000])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.home, 0x00]:
+            pass
+        elif received == [self.home, 0x01]:
+            self.throwError("Received X home error.")
+        else:
+            self.throwError("Received nonsense response when attempting to home the X axis.")
+
+    def homeY(self):
+        self.spi.xfer([self.home, 0b01000000])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.home, 0x00]:
+            pass
+        elif received == [self.home, 0x01]:
+            self.throwError("Received Y home error.")
+        else:
+            self.throwError("Received nonsense response when attempting to home the Y axis.")
+
+    def homeZ(self):
+        self.spi.xfer([self.home, 0b00100000])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.home, 0x00]:
+            pass
+        elif received == [self.home, 0x01]:
+            self.throwError("Received Z home error.")
+        else:
+            self.throwError("Received nonsense response when attempting to home the Z axis.")
+
+    def zeroTheta(self):
+        yes = 0x00004000
+        #no = 0x00010000
+        zeroMsg = QtWidgets.QMessageBox()
+        zeroMsg.setText("You are about to set the current Theta axis position as the zero position. Before continuing, ensure that the tool is parallel to the side walls of the machine. Do you wish to proceed with zeroing Theta?")
+        zeroMsg.addButton(QtWidgets.QMessageBox.Yes)
+        zeroMsg.addButton(QtWidgets.QMessageBox.No)
+        received = zeroMsg.exec_()
+
+        if received == yes:
+            self.spi.xfer([self.home, 0b00010000])
+
+    def homeAll(self):
+        self.homeX()
+        self.homeY()
+        self.homeZ()
+
+    def toggleServos(self):
+        self.spi.xfer(self.diagnostic)
+        sleep(self.readDelay)
+        received = self.spi.readbytes(20)
+
+        if received[18] > 0b00001111: #if one is on
+            received = self.spi.xfer(self.servo, 0x00) #turn all off
+            power = 0
+        else:
+            received = self.spi.xfer(self.servo, 0b11110000) #turn all on
+            power = 1
+
+        if received == [self.servoPower, 0x00]:
+            pass
+        elif received == [self.servoPower, 0x01] and power:
+            self.throwError("Received error when attempting to turn on all servos.")
+        elif received == [self.servoPower, 0x01] and not power:
+            self.throwError("Received error when attempting to turn off all servos.")
+        elif power:
+            self.throwError("Received nonsense response when attempting to turn on all servos.")
+        else:
+            self.throwError("Received nonsense response when attempting to turn off all servos.")
+
+    def manualAccelerate(self):
+        if self.jogIndex < len(self.jogSpeeds):
+            self.jogIndex = self.jogIndex + 1
+
+        pallete = QtGui.QPalette()
+        pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
+        self.speedDispManual.setPalette(pallete)
+        self.speedDispManual.setText(str(self.jogSpeeds[self.jogIndex]) + ' mm')
+
+    def manualDecelerate(self):
+        if self.jogIndex > 0:
+            self.jogIndex = self.jogIndex - 1
+
+        pallete = QtGui.QPalette()
+        pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
+        self.speedDispManual.setPalette(pallete)
+        self.speedDispManual.setText(str(self.jogSpeeds[self.jogIndex]) + ' mm')
+
+    def jogXNeg(self):
+        self.spi.xfer([self.jog, 0b10000000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x01]:
+            self.throwError("Overtravel in negative X direction due to jog. Halted by limit switch.")
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog X axis in negative direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog X axis in negative direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the X axis in the negative direction.")
+
+    def jogXPos(self):
+        self.spi.xfer([self.jog, 0b10001000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x02]:
+            self.throwError("Overtravel in positive X direction due to jog. Halted by programmatic limit.")
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog X axis in positive direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog X axis in positive direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the X axis in the positive direction.")
+
+    def jogYNeg(self):
+        self.spi.xfer([self.jog, 0b01000000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x01]:
+            self.throwError("Overtravel in negative Y direction due to jog. Halted by limit switch.")
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog Y axis in negative direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog Y axis in negative direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the Y axis in the negative direction.")
+
+    def jogYPos(self):
+        self.spi.xfer([self.jog, 0b01001000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x02]:
+            self.throwError("Overtravel in positive Y direction due to jog. Halted by programmatic limit.")
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog Y axis in positive direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog Y axis in positive direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the Y axis in the positive direction.")
+
+    def jogZNeg(self):
+        self.spi.xfer([self.jog, 0b00100000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x01]:
+            self.throwError("Overtravel in negative Z direction due to jog. Halted by limit switch.")
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog Z axis in negative direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog Z axis in negative direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the Z axis in the negative direction.")
+
+    def jogZPos(self):
+        self.spi.xfer([self.jog, 0b00101000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x02]:
+            self.throwError("Overtravel in positive Y direction due to jog. Halted by programmatic limit.")
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog Y axis in positive direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog Y axis in positive direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the Y axis in the positive direction.")
+
+    def jogThetaCCW(self):
+        self.spi.xfer([self.jog, 0b00010000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog the Theta axis in the counter-clockwise direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog the Theta axis in the counter-clockwise direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the Theta axis in the counter-clockwise direction.")
+
+    def jogThetaCW(self):
+        self.spi.xfer([self.jog, 0b00011000 | self.binRef[self.jogIndex]])
+        sleep(self.readDelay)
+        received = self.spi.readbytes(2)
+        if received == [self.jog, 0x00]:
+            pass
+        elif received == [self.jog, 0x03]:
+            self.throwError("Invalid jog motor assignment when attempting to jog the Theta axis in the clockwise direction.")
+        elif received == [self.jog, 0x04]:
+            self.throwError("Error when attempting to jog the Theta axis in the clockwise direction.")
+        else:
+            self.throwError("Received nonsense response when attempting to jog the Theta axis in the clockwise direction.")
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

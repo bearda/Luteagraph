@@ -1740,8 +1740,8 @@ border-color:rgb(161, 164, 163);</string>
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>../../../Desktop/a1a4a3-stepper-motor-50.png</normaloff>../../../Desktop/a1a4a3-stepper-motor-50.png</iconset>
+       <iconset resource="icons.qrc">
+        <normaloff>:/new/prefix1/Icons/Stepper50.png</normaloff>:/new/prefix1/Icons/Stepper50.png</iconset>
       </property>
       <property name="iconSize">
        <size>
