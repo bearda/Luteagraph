@@ -27,6 +27,7 @@
 #include "interp.h"
 #include "autoHome.h"
 #include "comm.h"
+#include "cmd.h"
 
 /* LED control defines (active low)*/
 #define LIGHT_OFF                       (1u)
@@ -212,10 +213,9 @@ int main()
     {
         cmd = SPIS_WaitForCommand(buf, buf_size);
         //execute command
-        executeCmd(cmd, buf);
+        executeCmd(cmd, buf, buf_size);
         //reply to command
-        uint8 reply[2] = {0x03, 0x0};
-        SPIS_SendReply(reply, 2);
+        
         //SPIS_UpdateStatus(0);
         //SPIS_CleanupAfterRead();
     }

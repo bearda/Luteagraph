@@ -57,6 +57,8 @@ void execute_jog(uint8* buf, uint32 buflen)
 //homes motors
 void execute_home(uint8* buf, uint32 buflen)
 {
+    //TODO: home axises independantly of each other.
+    autoHome();
     return;
 }
 

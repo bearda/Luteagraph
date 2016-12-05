@@ -13,6 +13,7 @@
 
 #include "GCode.h"
 #include "interp.h"
+#include "comm.h"
 
 int auto_home = 0;
 
@@ -24,8 +25,12 @@ void autoHome()
 
 void autoHomeComplete()
 {
-    //honestly, I don't know what this is for, but we might need something here
+    //tell GCode that we are done
     auto_home = 0;
+    
+    //we need to tell the pi that we are done.
+    uint8 reply[2] = {0x03, 0x0};
+    SPIS_SendReply(reply, 2);    
 }
 
 char autoHoming()
