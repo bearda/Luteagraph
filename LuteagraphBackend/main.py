@@ -10,7 +10,8 @@ from time import sleep
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
     metaDict = {}
-    saveDir = r'/home/cashe/Desktop/Projects'
+    workingDir = r'/home/cashe/Desktop/LuteagraphBackend/'
+    saveDir = r'/home/cashe/Desktop/LuteagraphBackend/Gfiles'
     bus = 0
     device = 0
     readDelay = 0.001
@@ -81,6 +82,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             item = QtWidgets.QListWidgetItem(self.fileList[-1])
             self.FileSelector.addItem(item)
 
+            #Calculate time of upload
             dateUpload = datetime.datetime.now()
             if dateUpload.hour > 11:
                 period = ' PM'
@@ -157,18 +159,17 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.errorDisp.setText(temp + '\n' + timeOfError + text)
 
-    def waitForComplete(self, cmdType, timeOut, *heartbeat):
+    def waitForComplete(self, cmdType, numBytes, timeOut, *heartbeat):
         count = 0
         while(count < timeOut):
             sleep(self.readDelay)
-            received = self.spi.readbytes(2)
+            received = self.spi.readbytes(numBytes)
             print('ins: '+str(received))
             if received[0] == heartbeat:
                 count = 0
             elif received[0] == cmdType:
                 return received
-            else:
-                count = count + 1
+            count = count + 1
         return -1
 
     def disableAllButtons(self):
@@ -183,7 +184,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         res = self.spi.xfer([self.home, 0b10000000])
         print(str(res))
         sleep(self.readDelay)
-        received = self.waitForComplete(self.home, 4000)
+        received = self.waitForComplete(self.home, 2, 4000)
         print(str(received))
         if received == [self.home, 0x00]:
             pass
