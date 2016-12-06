@@ -10,8 +10,7 @@ from time import sleep
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
     metaDict = {}
-    workingDir = r'/home/cashe/Desktop/LuteagraphBackend/'
-    saveDir = r'/home/cashe/Desktop/LuteagraphBackend/Gfiles'
+    saveDir = r'Gfiles'
     bus = 0
     device = 0
     readDelay = 0.001
@@ -72,6 +71,14 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jump2Manual(self):
         self.TabBar.setCurrentIndex(2)
+
+    def linkLoaded(self):
+        self.fileList = os.listdir(self.saveDir)
+        for elem in self.fileList:
+            item = QtWidgets.QListWidgetItem(elem)
+            self.FileSelector.addItem(item)
+
+        #retrieve saved metadata dictionary
 
     def loadFile(self):
         file = QtWidgets.QFileDialog.getOpenFileName(parent=self.parent(), caption='Select a Gcode file to upload to the project list.')
@@ -195,16 +202,19 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.xHome.setEnabled(1)
 
     def homeY(self):
-        self.spi.xfer([self.home, 0b01000000])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
-        print(str(received))
-        if received == [self.home, 0x00]:
-            pass
-        elif received == [self.home, 0x01]:
-            self.throwError("Received Y home error.")
-        else:
-            self.throwError("Received nonsense response when attempting to home the Y axis.")
+        #self.spi.xfer([self.home, 0b01000000])
+        #sleep(self.readDelay)
+        #received = self.spi.readbytes(2)
+        #print(str(received))
+        #if received == [self.home, 0x00]:
+        #    pass
+        #elif received == [self.home, 0x01]:
+        #    self.throwError("Received Y home error.")
+        #else:
+        #    self.throwError("Received nonsense response when attempting to home the Y axis.")
+        self.spi.xfer(self.diagnostic)
+        recieved = self.waitForComplete(self.diagnostic[0], 20, 4000)
+
 
     def homeZ(self):
         self.spi.xfer([self.home, 0b00100000])
