@@ -13,9 +13,18 @@
 #include <project.h>
 
 #include "comm.h"
+#include "cmd.h"
 
 const uint8 dummyBuffer[PACKET_SIZE] = {'a','b','c'};
-const uint8 zeroBuffer[PACKET_SIZE] = {0,0,0};
+const uint8 zeroBuffer[64] = {0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0,
+                              0,0,0,0,0,0,0,0};
+const uint8 gcode_complete_msg[2] = {cmd_gcode, 0};
 
 uint8 gcodeBuffer[256];
 uint8 gcodeLoc;
@@ -49,7 +58,7 @@ uint32 SPIS_WaitForCommand(uint8 *buf, uint32 read_size)
 
     //read header
     i = 0;
-    while (0 != SPIS_SpiUartGetRxBufferSize() && i < HEADER_SIZE)
+    while (i < HEADER_SIZE)
     {
         buf[i] = SPIS_SpiUartReadRxData();
         i++;
@@ -117,9 +126,10 @@ void SPIS_CleanupAfterRead(void)
 
 void SPIS_SendReply(uint8 *buffer, uint32 read_size)
 {
+    SPIS_SpiUartClearTxBuffer();
     SPIS_SpiUartPutArray(buffer, read_size);
     
-    //cleanup
+    int i = SPIS_SpiUartGetTxBufferSize();
     while (0 != SPIS_SpiUartGetTxBufferSize())
     {
     }

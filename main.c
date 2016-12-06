@@ -62,6 +62,7 @@ extern int prev_y;
 extern int prev_z;
 extern int prev_t;
 
+extern uint8* gcode_complete_msg;
 
 
 /*******************************************************************************
@@ -92,7 +93,8 @@ CY_ISR(InterruptHandler)
         {
             if (runNextGCodeCommand(&tar_x,&tar_y,&tar_z) < 0)
             {
-                Timer_1_WritePeriod(255);
+                SPIS_SendReply(gcode_complete_msg, sizeof(gcode_complete_msg));
+                Timer_1_Sleep();
                 return;
             }
         }
@@ -176,12 +178,16 @@ CY_ISR(InterruptHandler)
     pulse_table_loc = pulse_table_loc + 1;
     
     //check autohoming.
-    if (autoHoming())
+    char homing_bits = autoHoming(); //which axis are homing?
+    if ((homing_bits & X_USE_MASK && !x_limit_Read()) ||
+        (homing_bits & Y_USE_MASK && !y_limit_Read()) ||
+        (homing_bits & Z_USE_MASK && !z_limit_Read()))
     {
-        if (x_limit_Read())
-        {
-            autoHomeComplete();
-        }
+        //do nothing. we are still homing
+    }
+    else
+    {
+        autoHomeComplete();
     }
 }
 
@@ -217,7 +223,7 @@ int main()
     //saveGCodeToFlash(sampGCode, strlen(sampGCode) + 1);
     //runNextGCodeCommand(&tar_x, &tar_y, &tar_z);
     
-    Timer_1_Start();
+    //Timer_1_Start();
 
     for(;;)
     {

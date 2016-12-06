@@ -13,7 +13,7 @@
 #define AUTO_HOME_HEADER
 
 //this will tell the runNextGCodeCommand that we are autohoming
-void autoHome();
+void autoHome( char homing_bits);
 void autoHomeComplete();
 
 //are we currently trying to autohome?

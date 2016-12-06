@@ -12,15 +12,15 @@
 #include <project.h>
 
 #include "GCode.h"
-#include "interp.h"
 #include "comm.h"
 
-int auto_home = 0;
+char auto_home = 0;
 
-void autoHome()
+void autoHome( char homing_bits)
 {
     pulse_table_init();
-    auto_home = 1;
+    Timer_1_Wakeup();
+    auto_home = homing_bits;
 }
 
 void autoHomeComplete()

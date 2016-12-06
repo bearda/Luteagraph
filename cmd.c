@@ -48,6 +48,11 @@ void executeCmd(char cmd, uint8 *buf, uint32 buflen)
 //len is the number of bytes to expect, buflen is the length of buf
 void execute_gcode(uint8 *buf, uint32 buflen)
 {
+    uint32 gcode_len = buf[PACKET_DATA_LOC];
+    SPIS_WaitForCommand(buf, gcode_len);
+    initGCode();
+    saveGCodeToFlash( (char*) buf,gcode_len);
+    Timer_1_Wakeup();
     return;
 }
 
@@ -60,8 +65,8 @@ void execute_jog(uint8* buf, uint32 buflen)
 //homes motors
 void execute_home(uint8* buf, uint32 buflen)
 {
-    //TODO: home axises independantly of each other.
-    autoHome();
+    char homing_bits = buf[PACKET_DATA_LOC];
+    autoHome(homing_bits);
     return;
 }
 
