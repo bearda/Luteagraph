@@ -13,6 +13,7 @@
 
 #include "GCode.h"
 #include "comm.h"
+#include "heart.h"
 
 char auto_home = 0;
 
@@ -20,6 +21,7 @@ void autoHome( char homing_bits)
 {
     pulse_table_init();
     Timer_1_Wakeup();
+    heartbeat_Wakeup();
     auto_home = homing_bits;
 }
 

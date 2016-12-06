@@ -29,6 +29,7 @@
 #include "comm.h"
 #include "cmd.h"
 #include "bit_offsets.h"
+#include "heart.h"
 
 /* LED control defines (active low)*/
 #define LIGHT_OFF                       (1u)
@@ -93,7 +94,11 @@ CY_ISR(InterruptHandler)
         {
             if (runNextGCodeCommand(&tar_x,&tar_y,&tar_z) < 0)
             {
-                SPIS_SendReply(gcode_complete_msg, sizeof(gcode_complete_msg));
+                //remember manual setting
+                if (!autoHoming())
+                {
+                    SPIS_SendReply(gcode_complete_msg, sizeof(gcode_complete_msg));
+                }
                 Timer_1_Sleep();
                 return;
             }
@@ -212,6 +217,7 @@ int main()
     
     CyGlobalIntEnable;
     TC_CC_ISR_StartEx(InterruptHandler);
+    spi_heart_StartEx(heart_beater);
     /* Start components */
     //Timer_1_Sleep();
     
@@ -225,6 +231,9 @@ int main()
     
     Timer_1_Start();
     Timer_1_Sleep();
+    
+    heartbeat_Start();
+    heartbeat_Sleep();
 
     for(;;)
     {
