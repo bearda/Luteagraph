@@ -13,10 +13,11 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     saveDir = r'Gfiles'
     bus = 0
     device = 0
-    readDelay = 0.001
+    readDelay = 0.1
     jogIndex = 2
     jogSpeeds = [0.1, 0.5, 1, 5, 10, 50]
     binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
+    errors = 0
 
     # Commands
     jog = 0x02
@@ -24,7 +25,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     diagnostic = [0x04, 0x00]
     servo = 0x05
     gcode = 0x55
-    heartbeat = 0x44
+    heartbeat = 0x66
 
     def __init__(self, parent=None,):
         super(MyWindowClass, self).__init__(parent)
@@ -33,6 +34,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         # Initialize SPI
         self.spi = spidev.SpiDev()
         self.spi.open(self.bus, self.device)
+        self.spi.max_speed_hz = 50000
+        self.spi.mode = 0b00
 
         # Home page connections
         self.JumpProject.clicked.connect(self.jump2Project)
@@ -61,7 +64,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.thetaCW.clicked.connect(self.jogThetaCW)
 
         #Link up to loaded files
-        #print(os.listdir(self.saveDir))
+        self.linkLoaded()        
 
         #Create metadata file
 
@@ -145,7 +148,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
         self.errorDisp.setPalette(pallete)
-        if self.errorDisp.text() == "There are currently no errors.":
+        if self.errors == 0:
             self.errorDisp.clear()
         temp = self.errorDisp.text()
 
@@ -165,15 +168,17 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.errorDisp.setText(timeOfError + text)
         else:
             self.errorDisp.setText(temp + '\n' + timeOfError + text)
+        self.errors = self.errors + 1
 
-    def waitForComplete(self, cmdType, numBytes, timeOut, *heartbeat):
+    def waitForComplete(self, cmdType, numBytes, timeOut):
         count = 0
         while(count < timeOut):
             sleep(self.readDelay)
             received = self.spi.readbytes(numBytes)
             print('ins: '+str(received))
-            if received[0] == heartbeat:
+            if received[0] == self.heartbeat:
                 count = 0
+                print("Heartbeat detected")
             elif received[0] == cmdType:
                 return received
             count = count + 1
@@ -189,9 +194,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def homeX(self):
         self.xHome.setEnabled(0)
         res = self.spi.xfer([self.home, 0b10000000])
-        print(str(res))
-        sleep(self.readDelay)
-        received = self.waitForComplete(self.home, 2, 4000)
+        print('Received during tranmission: ' + str(res))
+        sleep(0.02)
+        received = self.waitForComplete(self.home, 2,4)
         print(str(received))
         if received == [self.home, 0x00]:
             pass
@@ -212,9 +217,10 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         #    self.throwError("Received Y home error.")
         #else:
         #    self.throwError("Received nonsense response when attempting to home the Y axis.")
-        self.spi.xfer(self.diagnostic)
-        recieved = self.waitForComplete(self.diagnostic[0], 20, 4000)
-
+        res = self.spi.xfer(self.diagnostic)
+        print('Received during transmission: ' + str(res))
+        recieved = self.waitForComplete(self.diagnostic[0], 20, 50)
+        print(str(recieved))
 
     def homeZ(self):
         self.spi.xfer([self.home, 0b00100000])
