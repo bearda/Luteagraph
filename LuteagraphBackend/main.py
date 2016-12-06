@@ -23,6 +23,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     home = 0x03
     diagnostic = [0x04, 0x00]
     servo = 0x05
+    gcode = 0x55
+    heartbeat = 0x44
 
     def __init__(self, parent=None,):
         super(MyWindowClass, self).__init__(parent)
@@ -155,17 +157,26 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             self.errorDisp.setText(temp + '\n' + timeOfError + text)
 
-    def waitForComplete(self, cmdType, timeOut):
+    def waitForComplete(self, cmdType, timeOut, *heartbeat):
         count = 0
         while(count < timeOut):
             sleep(self.readDelay)
             received = self.spi.readbytes(2)
             print('ins: '+str(received))
-            if received[0] == cmdType:
+            if received[0] == heartbeat:
+                count = 0
+            elif received[0] == cmdType:
                 return received
             else:
                 count = count + 1
         return -1
+
+    def disableAllButtons(self):
+        self.xHome.setEnabled(0)
+        self.yHome.setEnabled(0)
+        self.zHome.setEnabled(0)
+        self.thetaHome.setEnabled(0)
+        self.allHome.setEnabled(0)
 
     def homeX(self):
         self.xHome.setEnabled(0)
