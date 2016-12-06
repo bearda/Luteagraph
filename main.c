@@ -237,13 +237,16 @@ int main()
 
     for(;;)
     {
-        cmd = SPIS_WaitForCommand(buf, buf_size);
-        //execute command
-        executeCmd(cmd, buf, buf_size);
-        //reply to command
-        
-        //SPIS_UpdateStatus(0);
-        //SPIS_CleanupAfterRead();
+        if (!heartBeating())
+        {
+            cmd = SPIS_WaitForCommand(buf, buf_size);
+            //execute command
+            executeCmd(cmd, buf, buf_size);
+            //reply to command
+            
+            //SPIS_UpdateStatus(0);
+            //SPIS_CleanupAfterRead();
+        }
     }
 }
 

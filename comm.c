@@ -127,6 +127,7 @@ void SPIS_CleanupAfterRead(void)
 void SPIS_SendReply(uint8 *buffer, uint32 read_size)
 {
     SPIS_SpiUartClearTxBuffer();
+    SPIS_SpiUartClearRxBuffer();
     SPIS_SpiUartPutArray(buffer, read_size);
     
     /* Wait for the end of the transfer */

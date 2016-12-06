@@ -21,6 +21,7 @@ void autoHome( char homing_bits)
 {
     pulse_table_init();
     Timer_1_Wakeup();
+    startHeartBeating();
     heartbeat_Wakeup();
     auto_home = homing_bits;
 }
@@ -29,10 +30,6 @@ void autoHomeComplete()
 {
     //tell GCode that we are done
     auto_home = 0;
-    
-    //we need to tell the pi that we are done.
-    uint8 reply[2] = {0x03, 0x0};
-    SPIS_SendReply(reply, 2);    
 }
 
 char autoHoming()
