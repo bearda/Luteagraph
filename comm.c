@@ -129,13 +129,16 @@ void SPIS_SendReply(uint8 *buffer, uint32 read_size)
     SPIS_SpiUartClearTxBuffer();
     SPIS_SpiUartPutArray(buffer, read_size);
     
-    int i = SPIS_SpiUartGetTxBufferSize();
-    while (0 != SPIS_SpiUartGetTxBufferSize())
+    /* Wait for the end of the transfer */
+    while (read_size != SPIS_SpiUartGetRxBufferSize())
     {
     }
-    
+
     /* Clear RX buffer from dummy bytes */
     SPIS_SpiUartClearRxBuffer();
+
+    /* Put dummy data into TX buffer to be transmitted to SPIM */
+    SPIS_SpiUartPutArray(zeroBuffer, 64);
 }
 
 /* [] END OF FILE */
