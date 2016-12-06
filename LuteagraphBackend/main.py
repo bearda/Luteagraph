@@ -66,8 +66,21 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         #Link up to loaded files
         self.linkLoaded()        
 
-        #Create metadata file
+        #Link up to existing metadata
+        self.readMeta()        
 
+    def writeMeta(self, data):
+        with open('metadata.txt', 'w') as f:
+            f.write(str(self.metaDict))
+    
+    def readMeta(self):
+        with open('metadata.txt', 'w') as f:
+            try:
+                temp = f.read()
+                self.metaDict = eval(temp)
+            except:
+                print("excepting")
+                pass
 
     def jump2Project(self):
         self.TabBar.setCurrentIndex(1)
@@ -108,6 +121,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
             if fileName not in self.metaDict.keys():
                 self.metaDict[fileName] = dateUpload
+                self.writeMeta(self.metaDict)
         except:
             pass
 
@@ -182,6 +196,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             elif received[0] == cmdType:
                 return received
             count = count + 1
+        self.throwError("Heartbeat lost during cmdcode:" + str(cmdType) + " operation.")
         return -1
 
     def disableAllButtons(self):
