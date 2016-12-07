@@ -18,5 +18,7 @@
         <file>Icons/Up50W.png</file>
         <file>Icons/Home50.png</file>
         <file>Icons/Stepper50.png</file>
+        <file>Icons/DeleteElement.png</file>
+        <file>Icons/Trash.png</file>
     </qresource>
 </RCC>

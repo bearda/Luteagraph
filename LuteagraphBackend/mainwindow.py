@@ -184,7 +184,7 @@ class Ui_MainWindow(object):
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
         self.label_9 = QtWidgets.QLabel(self.Home)
-        self.label_9.setGeometry(QtCore.QRect(480, 230, 31, 21))
+        self.label_9.setGeometry(QtCore.QRect(490, 240, 31, 21))
         font = QtGui.QFont()
         font.setFamily("Arial Rounded MT Bold")
         self.label_9.setFont(font)
@@ -209,7 +209,7 @@ class Ui_MainWindow(object):
         self.LoadFile.setFont(font)
         self.LoadFile.setStyleSheet("background-color: rgb(172, 99, 22);\n"
 "border-style:solid;\n"
-"border-bottom-right-radius:3px;\n"
+"\n"
 "border-bottom-left-radius:3px;\n"
 "color:rgb(161, 164, 163);")
         icon2 = QtGui.QIcon()
@@ -419,6 +419,20 @@ class Ui_MainWindow(object):
 "border-color:rgb(172, 99, 22)")
         self.FileDescription_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.FileDescription_4.setObjectName("FileDescription_4")
+        self.deleteFile = QtWidgets.QPushButton(self.Project)
+        self.deleteFile.setGeometry(QtCore.QRect(190, 350, 51, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial Rounded MT Bold")
+        self.deleteFile.setFont(font)
+        self.deleteFile.setStyleSheet("background-color: rgb(172, 99, 22);\n"
+"border-style:solid;\n"
+"border-bottom-right-radius:3px;\n"
+"color:rgb(161, 164, 163);")
+        self.deleteFile.setText("")
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Trash.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.deleteFile.setIcon(icon5)
+        self.deleteFile.setObjectName("deleteFile")
         self.FileDescription_4.raise_()
         self.LoadFile.raise_()
         self.Start.raise_()
@@ -432,6 +446,7 @@ class Ui_MainWindow(object):
         self.speedUpProj.raise_()
         self.label_56.raise_()
         self.speedDownProj.raise_()
+        self.deleteFile.raise_()
         self.TabBar.addTab(self.Project, "")
         self.Manual = QtWidgets.QWidget()
         self.Manual.setCursor(QtGui.QCursor(QtCore.Qt.CrossCursor))
@@ -467,9 +482,9 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.yNeg.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Down50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.yNeg.setIcon(icon5)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Down50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.yNeg.setIcon(icon6)
         self.yNeg.setIconSize(QtCore.QSize(30, 30))
         self.yNeg.setObjectName("yNeg")
         self.xNeg = QtWidgets.QPushButton(self.Manual)
@@ -491,9 +506,9 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.yPos.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Up50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.yPos.setIcon(icon6)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Up50W.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.yPos.setIcon(icon7)
         self.yPos.setIconSize(QtCore.QSize(30, 30))
         self.yPos.setObjectName("yPos")
         self.xHome = QtWidgets.QPushButton(self.Manual)
@@ -515,9 +530,9 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.pushButton_13.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Home50.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushButton_13.setIcon(icon7)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Home50.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_13.setIcon(icon8)
         self.pushButton_13.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_13.setObjectName("pushButton_13")
         self.label_2 = QtWidgets.QLabel(self.Manual)
@@ -570,7 +585,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.zPos.setText("")
-        self.zPos.setIcon(icon6)
+        self.zPos.setIcon(icon7)
         self.zPos.setIconSize(QtCore.QSize(30, 30))
         self.zPos.setObjectName("zPos")
         self.zNeg = QtWidgets.QPushButton(self.Manual)
@@ -581,7 +596,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.zNeg.setText("")
-        self.zNeg.setIcon(icon5)
+        self.zNeg.setIcon(icon6)
         self.zNeg.setIconSize(QtCore.QSize(30, 30))
         self.zNeg.setObjectName("zNeg")
         self.label_34 = QtWidgets.QLabel(self.Manual)
@@ -640,7 +655,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.thetaCCW.setText("")
-        self.thetaCCW.setIcon(icon6)
+        self.thetaCCW.setIcon(icon7)
         self.thetaCCW.setIconSize(QtCore.QSize(30, 30))
         self.thetaCCW.setObjectName("thetaCCW")
         self.thetaCW = QtWidgets.QPushButton(self.Manual)
@@ -651,7 +666,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.thetaCW.setText("")
-        self.thetaCW.setIcon(icon6)
+        self.thetaCW.setIcon(icon7)
         self.thetaCW.setIconSize(QtCore.QSize(30, 30))
         self.thetaCW.setObjectName("thetaCW")
         self.speedDownManual = QtWidgets.QPushButton(self.Manual)
@@ -740,9 +755,9 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.servoPower.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("../../../Desktop/a1a4a3-stepper-motor-50.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.servoPower.setIcon(icon8)
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap(":/new/prefix1/Icons/Stepper50.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.servoPower.setIcon(icon9)
         self.servoPower.setIconSize(QtCore.QSize(25, 25))
         self.servoPower.setObjectName("servoPower")
         self.yHome = QtWidgets.QPushButton(self.Manual)
@@ -764,7 +779,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.pushButton_17.setText("")
-        self.pushButton_17.setIcon(icon7)
+        self.pushButton_17.setIcon(icon8)
         self.pushButton_17.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_17.setObjectName("pushButton_17")
         self.zHome = QtWidgets.QPushButton(self.Manual)
@@ -786,7 +801,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.pushButton_19.setText("")
-        self.pushButton_19.setIcon(icon7)
+        self.pushButton_19.setIcon(icon8)
         self.pushButton_19.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_19.setObjectName("pushButton_19")
         self.thetaHome = QtWidgets.QPushButton(self.Manual)
@@ -809,7 +824,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.pushButton_21.setText("")
-        self.pushButton_21.setIcon(icon7)
+        self.pushButton_21.setIcon(icon8)
         self.pushButton_21.setIconSize(QtCore.QSize(25, 25))
         self.pushButton_21.setObjectName("pushButton_21")
         self.allHome = QtWidgets.QPushButton(self.Manual)
@@ -820,7 +835,7 @@ class Ui_MainWindow(object):
 "border-width: 2px;\n"
 "border-color:rgb(161, 164, 163);")
         self.allHome.setText("")
-        self.allHome.setIcon(icon7)
+        self.allHome.setIcon(icon8)
         self.allHome.setIconSize(QtCore.QSize(25, 25))
         self.allHome.setObjectName("allHome")
         self.label_33.raise_()
@@ -883,7 +898,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralWidget)
 
         self.retranslateUi(MainWindow)
-        self.TabBar.setCurrentIndex(2)
+        self.TabBar.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
