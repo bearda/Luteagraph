@@ -34,8 +34,8 @@ void execute_diag()
     msg.t_pos = (int32) t_cur_loc; 
     
     msg.homed = 0;
-    msg.limit_switches = 0xF0;
-    msg.servo_on = 0xF0;
+    msg.limit_switches = SPIS_SpiUartGetRxBufferSize();
+    msg.servo_on = SPIS_SpiUartGetTxBufferSize();
     
     SPIS_SendReply( (uint8 *) &msg, sizeof(msg));
 }

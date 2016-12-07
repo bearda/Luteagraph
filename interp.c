@@ -174,7 +174,7 @@ int linear_interp(int stop_x, int stop_y, int stop_z)
             }
         }
         pulse_table[pulse_table_size].pulse_bits = pulse_char;
-        pulse_table[pulse_table_size].delta_t = 55; //(char) (100.0 * sqrt(r_2) / cur_pri);
+        pulse_table[pulse_table_size].delta_t = 10; //(char) (100.0 * sqrt(r_2) / cur_pri);
         pulse_table_size++;
         if (pulse_table_size >= PULSE_TABLE_SIZE)
         {

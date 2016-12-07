@@ -30,6 +30,8 @@ void autoHomeComplete()
 {
     //tell GCode that we are done
     auto_home = 0;
+    Timer_1_Sleep();
+    pulse_table_init();
 }
 
 char autoHoming()
