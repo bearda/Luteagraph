@@ -16,6 +16,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     readDelay = 0.1
     jogIndex = 2
     jogSpeeds = [0.1, 0.5, 1, 5, 10, 50]
+    projIndex = 9
+    projSpeeds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
     binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
     errors = 0
 
@@ -45,6 +47,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.LoadFile.clicked.connect(self.loadFile)
         self.deleteFile.clicked.connect(self.removeFile)
         self.FileSelector.itemClicked.connect(self.dispMeta)
+        self.speedDownProj.clicked.connect(self.projectAccelerate)
+        self.speedUpProj.clicked.connect(self.projectDecelerate)
 
         # Manual page connections
         self.xHome.clicked.connect(self.homeX)
@@ -450,6 +454,27 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.throwError("Error when attempting to jog the Theta axis in the clockwise direction.")
         else:
             self.throwError("Received nonsense response when attempting to jog the Theta axis in the clockwise direction.")
+
+    def projectAccelerate(self):
+        if self.projIndex < len(self.projSpeeds) - 1:
+            self.projIndex = self.projIndex + 1
+
+        pallete = QtGui.QPalette()
+        pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
+        self.speedDispManual.setPalette(pallete)
+        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
+        self.speedDispManual.setText(str(self.projSpeeds[self.projIndex]) + '%')
+
+    def projectDecelerate(self):
+        if self.projIndex > 0:
+            self.projIndex = self.projIndex - 1
+
+        pallete = QtGui.QPalette()
+        pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
+        self.speedDispManual.setPalette(pallete)
+        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
+        self.speedDispManual.setText(str(self.projSpeeds[self.projIndex]) + '%')
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
