@@ -47,8 +47,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.LoadFile.clicked.connect(self.loadFile)
         self.deleteFile.clicked.connect(self.removeFile)
         self.FileSelector.itemClicked.connect(self.dispMeta)
-        self.speedDownProj.clicked.connect(self.projectAccelerate)
-        self.speedUpProj.clicked.connect(self.projectDecelerate)
+        self.speedUpProj.clicked.connect(self.projectAccelerate)
+        self.speedDownProj.clicked.connect(self.projectDecelerate)
 
         # Manual page connections
         self.xHome.clicked.connect(self.homeX)
@@ -326,7 +326,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
         self.speedDispManual.setPalette(pallete)
-        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
+        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 14))
         self.speedDispManual.setText(str(self.jogSpeeds[self.jogIndex]) + ' mm')
 
     def manualDecelerate(self):
@@ -336,7 +336,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
         self.speedDispManual.setPalette(pallete)
-        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
+        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 14))
         self.speedDispManual.setText(str(self.jogSpeeds[self.jogIndex]) + ' mm')
 
     def jogXNeg(self):
@@ -461,9 +461,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
-        self.speedDispManual.setPalette(pallete)
-        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
-        self.speedDispManual.setText(str(self.projSpeeds[self.projIndex]) + '%')
+        self.speedDispProj.setPalette(pallete)
+        self.speedDispProj.setFont(QtGui.QFont('Arial Rounded MT Bold', 14))
+        self.speedDispProj.setText(str(self.projSpeeds[self.projIndex]) + '%')
 
     def projectDecelerate(self):
         if self.projIndex > 0:
@@ -471,9 +471,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
         pallete = QtGui.QPalette()
         pallete.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161, 164, 163))
-        self.speedDispManual.setPalette(pallete)
-        self.speedDispManual.setFont(QtGui.QFont('Arial Rounded MT Bold', 18))
-        self.speedDispManual.setText(str(self.projSpeeds[self.projIndex]) + '%')
+        self.speedDispProj.setPalette(pallete)
+        self.speedDispProj.setFont(QtGui.QFont('Arial Rounded MT Bold', 14))
+        self.speedDispProj.setText(str(self.projSpeeds[self.projIndex]) + '%')
 
 
 if __name__ == '__main__':
