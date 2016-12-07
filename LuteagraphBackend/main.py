@@ -14,6 +14,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     bus = 0
     device = 0
     readDelay = 0.1
+    cmdDelay = 0.02
     jogIndex = 2
     jogSpeeds = [0.1, 0.5, 1, 5, 10, 50]
     projIndex = 9
@@ -240,7 +241,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.xHome.setEnabled(0)
         res = self.spi.xfer([self.home, 0b10000000])
         print('Received during tranmission: ' + str(res))
-        sleep(0.02)
+        sleep(self.cmdDelay)
         received = self.waitForComplete(self.home, 2,4)
         print(str(received))
         if received == [self.home, 0x00]:
@@ -252,25 +253,21 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.xHome.setEnabled(1)
 
     def homeY(self):
-        #self.spi.xfer([self.home, 0b01000000])
-        #sleep(self.readDelay)
-        #received = self.spi.readbytes(2)
-        #print(str(received))
-        #if received == [self.home, 0x00]:
-        #    pass
-        #elif received == [self.home, 0x01]:
-        #    self.throwError("Received Y home error.")
-        #else:
-        #    self.throwError("Received nonsense response when attempting to home the Y axis.")
-        res = self.spi.xfer(self.diagnostic)
-        print('Received during transmission: ' + str(res))
-        recieved = self.waitForComplete(self.diagnostic[0], 20, 50)
-        print(str(recieved))
+        self.spi.xfer([self.home, 0b01000000])
+        sleep(self.cmdDelay)
+        received = self.waitForComplete(self.home, 2, 4)
+        print(str(received))
+        if received == [self.home, 0x00]:
+            pass
+        elif received == [self.home, 0x01]:
+            self.throwError("Received Y home error.")
+        else:
+            self.throwError("Received nonsense response when attempting to home the Y axis.")
 
     def homeZ(self):
         self.spi.xfer([self.home, 0b00100000])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitForComplete(self.home, 2, 4)
         print(str(received))
         if received == [self.home, 0x00]:
             pass
@@ -280,21 +277,35 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.throwError("Received nonsense response when attempting to home the Z axis.")
 
     def zeroTheta(self):
-        yes = 0x00004000
-        #no = 0x00010000
-        zeroMsg = QtWidgets.QMessageBox()
-        zeroMsg.setText("You are about to set the current Theta axis position as the zero position. Before continuing, ensure that the tool is PARALLEL to the side walls of the machine. Do you wish to proceed with zeroing Theta?")
-        zeroMsg.addButton(QtWidgets.QMessageBox.Yes)
-        zeroMsg.addButton(QtWidgets.QMessageBox.No)
-        received = zeroMsg.exec_()
+        #yes = 0x00004000
+        ##no = 0x00010000
+        #zeroMsg = QtWidgets.QMessageBox()
+        #zeroMsg.setText("You are about to set the current Theta axis position as the zero position. Before continuing, ensure that the tool is PARALLEL to the side walls of the machine. Do you wish to proceed with zeroing Theta?")
+        #zeroMsg.addButton(QtWidgets.QMessageBox.Yes)
+        #zeroMsg.addButton(QtWidgets.QMessageBox.No)
+        #received = zeroMsg.exec_()
 
-        if received == yes:
-            self.spi.xfer([self.home, 0b00010000])
+        #if received == yes:
+            #self.spi.xfer([self.home, 0b00010000])
+        res = self.spi.xfer(self.diagnostic)
+        print('Received during transmission: ' + str(res))
+        recieved = self.waitForComplete(self.diagnostic[0], 20, 50)
+        print(str(recieved))
 
     def homeAll(self):
-        self.homeX()
-        self.homeY()
-        self.homeZ()
+        #self.homeX()
+        #self.homeY()
+        #self.homeZ()
+        self.spi.xfer([self.home, 0b10100000])
+        sleep(self.cmdDelay)
+        received = self.waitForComplete(self.home, 2, 4)
+        print(str(received))
+        if received == [self.home, 0x00]:
+            pass
+        elif received == [self.home, 0x01]:
+            self.throwError("Received Z home error.")
+        else:
+            self.throwError("Received nonsense response when attempting to home the Z axis.")
 
     def toggleServos(self):
         self.spi.xfer(self.diagnostic)
