@@ -67,7 +67,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         #Link up to loaded files
         self.linkLoaded()        
 
-    def writeMeta(self, data):
+    def writeMeta(self):
         with open('metadata.txt', 'w') as f:
             f.write(str(self.metaDict))
     
@@ -123,14 +123,24 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
             if fileName not in self.metaDict.keys():
                 self.metaDict[fileName] = dateUpload
-                self.writeMeta(self.metaDict)
+                self.writeMeta()
         except:
             pass
 
     def removeFile(self):
         item = self.FileSelector.selectedItems()[0]
-        print(item)
-
+        index =  self.FileSelector.currentRow()
+        self.FileSelector.takeItem(index)
+        if item.text() in self.fileList:
+            self.fileList.remove(item.text())
+        if item.text() in self.metaDict:
+            del self.metaDict[item.text()]
+            self.writeMeta()
+        os.unlink(self.saveDir + '/' + item.text())
+        index = None
+        item = None 
+        self.FileDescription.setText('')
+        
     def dispMeta(self, name):
         path = self.saveDir + '/' + name.text()
         sizeBytes = os.path.getsize(path)
