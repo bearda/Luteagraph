@@ -43,6 +43,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # Project page connections
         self.LoadFile.clicked.connect(self.loadFile)
+        self.deleteFile.clicked.connect(self.removeFile)
         self.FileSelector.itemClicked.connect(self.dispMeta)
 
         # Manual page connections
@@ -126,6 +127,10 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         except:
             pass
 
+    def removeFile(self):
+        item = self.FileSelector.selectedItems()[0]
+        print(item)
+
     def dispMeta(self, name):
         path = self.saveDir + '/' + name.text()
         sizeBytes = os.path.getsize(path)
@@ -168,7 +173,6 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
                                      'File size: ' + sizeBytes + '\n\n' +
                                      'Date last modified: ' + dateModified + '\n\n' +
                                      'Date uploaded: N/A')
-        
 
     def throwError(self, text):
         pallete = QtGui.QPalette()
