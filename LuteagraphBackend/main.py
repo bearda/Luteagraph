@@ -158,11 +158,17 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, QtGui.QColor(161,164,163))
         self.FileDescription.setPalette(palette)
-
-        self.FileDescription.setText('File path: ' + path + '\n\n' +
+        try:
+            self.FileDescription.setText('File path: ' + path + '\n\n' +
                                      'File size: ' + sizeBytes + '\n\n' +
                                      'Date last modified: ' + dateModified + '\n\n' +
                                      'Date uploaded: ' + self.metaDict[name.text()])
+        except:
+           self.FileDescription.setText('File path: ' + path + '\n\n' +
+                                     'File size: ' + sizeBytes + '\n\n' +
+                                     'Date last modified: ' + dateModified + '\n\n' +
+                                     'Date uploaded: N/A')
+        
 
     def throwError(self, text):
         pallete = QtGui.QPalette()
