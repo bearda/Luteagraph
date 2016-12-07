@@ -213,6 +213,7 @@ int main()
        
     x_on_Write(1u);
 
+
     /* Enable global interrupt */
     
     CyGlobalIntEnable;
@@ -228,7 +229,7 @@ int main()
     //SPIS_CleanupAfterRead();
     //saveGCodeToFlash(sampGCode, strlen(sampGCode) + 1);
     //runNextGCodeCommand(&tar_x, &tar_y, &tar_z);
-    
+      
     Timer_1_Start();
     Timer_1_Sleep();
     
