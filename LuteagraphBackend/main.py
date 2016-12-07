@@ -66,15 +66,12 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         #Link up to loaded files
         self.linkLoaded()        
 
-        #Link up to existing metadata
-        self.readMeta()        
-
     def writeMeta(self, data):
         with open('metadata.txt', 'w') as f:
             f.write(str(self.metaDict))
     
     def readMeta(self):
-        with open('metadata.txt', 'w') as f:
+        with open('metadata.txt', 'r') as f:
             try:
                 temp = f.read()
                 self.metaDict = eval(temp)
@@ -93,8 +90,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         for elem in self.fileList:
             item = QtWidgets.QListWidgetItem(elem)
             self.FileSelector.addItem(item)
-
-        #retrieve saved metadata dictionary
+        self.readMeta()
 
     def loadFile(self):
         file = QtWidgets.QFileDialog.getOpenFileName(parent=self.parent(), caption='Select a Gcode file to upload to the project list.')
@@ -116,8 +112,13 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 hour = str(dateUpload.hour)
                 period = ' AM'
+            if dateUpload.minute < 10:
+                minute = '0' + str(dateUpload.minute)
+            else:
+                minute = str(dateUpload.minute)
+                
             dateUpload = str(dateUpload.month) + '/' + str(dateUpload.day) + '/' + str(
-                dateUpload.year) + ' ' + hour + ':' + str(dateUpload.minute) + period
+                dateUpload.year) + ' ' + hour + ':' + minute + period
 
             if fileName not in self.metaDict.keys():
                 self.metaDict[fileName] = dateUpload
@@ -139,8 +140,13 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         else:
             hour = str(dateModified.hour)
             period = ' AM'
+        if dateModified.minute < 10:
+            minute = '0' + str(dateModified.minute)
+        else:
+            minute = str(dateModified.minute)    
+
         dateModified = str(dateModified.month) + '/' + str(dateModified.day) + '/' + str(
-            dateModified.year) + ' ' + hour + ':' + str(dateModified.minute) + period
+            dateModified.year) + ' ' + hour + ':' + minute + period
 
         if sizeBytes > 1000000:
             sizeBytes = str(round(float(sizeBytes) / 1000000, 2)) + ' MB'
