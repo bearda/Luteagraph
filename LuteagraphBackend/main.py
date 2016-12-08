@@ -63,6 +63,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.Start.clicked.connect(self.projectStart)
         self.Pause.clicked.connect(self.projectPause)
         self.Stop.clicked.connect(self.projectStop)
+    
+        self.Pause.setWindowOpacity(0.1)
 
         # Project page initializations
         self.Pause.setEnabled(False)
@@ -506,20 +508,29 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def projectStart(self):
         self.started = True
         self.paused = False
+        self.ProgressBar.setValue(0)
         self.Pause.setEnabled(True)
         self.Stop.setEnabled(True)
         self.Start.setEnabled(False)
         self.runLoop()
     
     def projectPause(self):
-        self.paused = not self.paused
+        #self.paused = not self.paused
+        if self.paused == 0:
+            self.paused = 1
+            self.Pause.setText("Resume")
+        else:
+            self.paused = 0
+            self.Pause.setText("Pause")
 
     def projectStop(self):
         self.started = False
         self.Pause.setEnabled(False)
         self.Stop.setEnabled(False)
         self.Start.setEnabled(True)
-
+        self.ProgressBar.setValue(0)
+        self.Pause.setText("Pause")
+    
     def runLoop(self):
         line = 0
         txBuffer = '' 
@@ -530,7 +541,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.gCodeList = self.parse.fileParse(self.saveDir + '/' + item.text()) 
             while(self.started):  
                 if self.paused:
-                    print("PAUSE PRESSED")
+                    pass                    
                 else:
                     print("not paused")
                     #load transmission buffer and increment to new point in file
@@ -545,15 +556,19 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
                     print(txBuffer)
                     #clear tx buffer
                     txBuffer = ''
+                    self.updateProgress(line, len(self.gCodeList))
+                    sleep(0.03)
                     if not line < len(self.gCodeList):
                         self.started = 0
                 QtGui.QGuiApplication.processEvents()
         else:
-            print("length not greater than 0")
-            print(item)
-        self.Pause.setEnabled(False)
-        self.Stop.setEnabled(False)
-        self.Start.setEnabled(True)
+            self.Pause.setEnabled(False)
+            self.Stop.setEnabled(False)
+            self.Start.setEnabled(True)
+
+    def updateProgress(self, current, total):
+        percent = round((current*100) / total)
+        self.ProgressBar.setValue(percent)
 
 
 if __name__ == '__main__': 
@@ -561,3 +576,4 @@ if __name__ == '__main__':
     myWindow = MyWindowClass()
     myWindow.show()
     sys.exit(app.exec_())
+    
