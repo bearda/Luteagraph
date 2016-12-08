@@ -6,6 +6,7 @@ from shutil import copy2
 import datetime
 import spidev
 from time import sleep
+import parser
 
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
@@ -40,6 +41,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.spi.max_speed_hz = 50000
         self.spi.mode = 0b00
 
+        #Initialize parser
+        self.parse = parser.gcodeParser()
+
         # Home page connections
         self.JumpProject.clicked.connect(self.jump2Project)
         self.JumpManual.clicked.connect(self.jump2Manual)
@@ -50,6 +54,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.FileSelector.itemClicked.connect(self.dispMeta)
         self.speedUpProj.clicked.connect(self.projectAccelerate)
         self.speedDownProj.clicked.connect(self.projectDecelerate)
+        self.Start.clicked.connect(self.projectBegin)
 
         # Manual page connections
         self.xHome.clicked.connect(self.homeX)
@@ -296,7 +301,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         #self.homeX()
         #self.homeY()
         #self.homeZ()
-        self.spi.xfer([self.home, 0b10100000])
+        self.spi.xfer([self.home, 0b11100000])
         sleep(self.cmdDelay)
         received = self.waitForComplete(self.home, 2, 4)
         print(str(received))
@@ -485,6 +490,10 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.speedDispProj.setPalette(pallete)
         self.speedDispProj.setFont(QtGui.QFont('Arial Rounded MT Bold', 14))
         self.speedDispProj.setText(str(self.projSpeeds[self.projIndex]) + '%')
+
+    def projectBegin(self):
+        item = self.FileSelector.selectedItems()[0]
+        self.parse.fileParse(self.saveDir + '/' + item.text())
 
 
 if __name__ == '__main__':
