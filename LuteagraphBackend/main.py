@@ -8,6 +8,7 @@ import spidev
 from time import sleep
 import parser
 
+
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
     metaDict = {}
@@ -22,6 +23,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     projSpeeds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
     binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
     errors = 0
+    pause = False
+    gCodeList = []
 
     # Commands
     jog = 0x02
@@ -30,6 +33,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     servo = 0x05
     gcode = 0x55
     heartbeat = 0x66
+
 
     def __init__(self, parent=None,):
         super(MyWindowClass, self).__init__(parent)
@@ -55,6 +59,11 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.speedUpProj.clicked.connect(self.projectAccelerate)
         self.speedDownProj.clicked.connect(self.projectDecelerate)
         self.Start.clicked.connect(self.projectBegin)
+        self.Pause.clicked.connect(self.pauseToggle)
+
+        # Project page initializations
+        self.Pause.setEnabled(False)
+        self.Stop.setEnabled(False)
 
         # Manual page connections
         self.xHome.clicked.connect(self.homeX)
@@ -492,9 +501,37 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.speedDispProj.setText(str(self.projSpeeds[self.projIndex]) + '%')
 
     def projectBegin(self):
-        item = self.FileSelector.selectedItems()[0]
-        self.parse.fileParse(self.saveDir + '/' + item.text())
+        pause = False
+        line = 0
+        txBuffer = []
 
+        self.Pause.setEnabled(True)
+        self.Stop.setEnabled(True)
+        self.Start.setEnabled(False)
+
+        item = self.FileSelector.selectedItems()[0]
+        self.gCodeList = self.parse.fileParse(self.saveDir + '/' + item.text())
+
+        while(True):
+            if self.Pause.clicked():
+                pause = not pause
+            if self.Stop.clicked():
+                self.Pause.setEnabled(False)
+                self.Stop.setEnabled(False)
+                self.Start.setEnabled(True)
+                break
+            if not pause:
+                #load transmission buffer and increment to new point in file
+                while len(txBuffer) + len(self.gCodeList[line]) < 256: # max of 255
+                    txBuffer.append(self.gCodeList[line])
+                    line = line + 1
+
+                #transmit command and size
+                print(str(self.gcode) + ', ' + str(size(txBuffer)) + '\n')
+                #transmit gcode dump
+                print(str(txBuffer))
+                #clear tx buffer
+                txBuffer.clear()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
