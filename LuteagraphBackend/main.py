@@ -12,7 +12,8 @@ import parser
 class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     fileList = []
     metaDict = {}
-    saveDir = r'Gfiles'
+    saveDir = r'/home/cashe/Luteagraph/LuteagraphBackend/Gfiles'
+    metaFile = r'/home/cashe/Luteagraph/LuteagraphBackend/metadata.txt'
     bus = 0
     device = 0
     readDelay = 0.1
@@ -23,6 +24,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
     projSpeeds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
     binRef = [0b000, 0b001, 0b010, 0b011, 0b100, 0b101, 0b110, 0b111]
     errors = 0
+    started = False
     pause = False
     gCodeList = []
 
@@ -58,8 +60,9 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.FileSelector.itemClicked.connect(self.dispMeta)
         self.speedUpProj.clicked.connect(self.projectAccelerate)
         self.speedDownProj.clicked.connect(self.projectDecelerate)
-        self.Start.clicked.connect(self.projectBegin)
-        self.Pause.clicked.connect(self.pauseToggle)
+        self.Start.clicked.connect(self.projectStart)
+        self.Pause.clicked.connect(self.projectPause)
+        self.Stop.clicked.connect(self.projectStop)
 
         # Project page initializations
         self.Pause.setEnabled(False)
@@ -87,16 +90,15 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.linkLoaded()        
 
     def writeMeta(self):
-        with open('metadata.txt', 'w') as f:
+        with open(self.metaFile, 'w') as f:
             f.write(str(self.metaDict))
     
     def readMeta(self):
-        with open('metadata.txt', 'r') as f:
+        with open(self.metaFile, 'r') as f:
             try:
                 temp = f.read()
                 self.metaDict = eval(temp)
-            except:
-                print("excepting")
+            except: 
                 pass
 
     def jump2Project(self):
@@ -445,6 +447,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         received = self.spi.readbytes(2)
         if received == [self.jog, 0x00]:
             pass
+    
         elif received == [self.jog, 0x02]:
             self.throwError("Overtravel in positive Y direction due to jog. Halted by programmatic limit.")
         elif received == [self.jog, 0x03]:
@@ -500,40 +503,60 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.speedDispProj.setFont(QtGui.QFont('Arial Rounded MT Bold', 14))
         self.speedDispProj.setText(str(self.projSpeeds[self.projIndex]) + '%')
 
-    def projectBegin(self):
-        pause = False
-        line = 0
-        txBuffer = []
-
+    def projectStart(self):
+        self.started = True
+        self.paused = False
         self.Pause.setEnabled(True)
         self.Stop.setEnabled(True)
         self.Start.setEnabled(False)
+        self.runLoop()
+    
+    def projectPause(self):
+        self.paused = not self.paused
 
-        item = self.FileSelector.selectedItems()[0]
-        self.gCodeList = self.parse.fileParse(self.saveDir + '/' + item.text())
+    def projectStop(self):
+        self.started = False
+        self.Pause.setEnabled(False)
+        self.Stop.setEnabled(False)
+        self.Start.setEnabled(True)
 
-        while(True):
-            if self.Pause.clicked():
-                pause = not pause
-            if self.Stop.clicked():
-                self.Pause.setEnabled(False)
-                self.Stop.setEnabled(False)
-                self.Start.setEnabled(True)
-                break
-            if not pause:
-                #load transmission buffer and increment to new point in file
-                while len(txBuffer) + len(self.gCodeList[line]) < 256: # max of 255
-                    txBuffer.append(self.gCodeList[line])
-                    line = line + 1
+    def runLoop(self):
+        line = 0
+        txBuffer = '' 
+        item = self.FileSelector.selectedItems()
+        
+        if len(item) > 0:
+            item = item[0]
+            self.gCodeList = self.parse.fileParse(self.saveDir + '/' + item.text()) 
+            while(self.started):  
+                if self.paused:
+                    print("PAUSE PRESSED")
+                else:
+                    print("not paused")
+                    #load transmission buffer and increment to new point in file
+                   
+                    while line < len(self.gCodeList) and len(txBuffer) + len(self.gCodeList[line]) < 256: # max of 255 
+                        txBuffer = txBuffer + self.gCodeList[line]
+                        line = line + 1
 
-                #transmit command and size
-                print(str(self.gcode) + ', ' + str(size(txBuffer)) + '\n')
-                #transmit gcode dump
-                print(str(txBuffer))
-                #clear tx buffer
-                txBuffer.clear()
+                    #transmit command and size
+                    print(str(self.gcode) + ', ' + str(len(txBuffer)) + '\n')
+                    #transmit gcode dump
+                    print(txBuffer)
+                    #clear tx buffer
+                    txBuffer = ''
+                    if not line < len(self.gCodeList):
+                        self.started = 0
+                QtGui.QGuiApplication.processEvents()
+        else:
+            print("length not greater than 0")
+            print(item)
+        self.Pause.setEnabled(False)
+        self.Stop.setEnabled(False)
+        self.Start.setEnabled(True)
 
-if __name__ == '__main__':
+
+if __name__ == '__main__': 
     app = QtWidgets.QApplication(sys.argv)
     myWindow = MyWindowClass()
     myWindow.show()
