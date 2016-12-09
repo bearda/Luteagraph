@@ -305,6 +305,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
         #if received == yes:
             #self.spi.xfer([self.home, 0b00010000])
+
         res = self.spi.xfer(self.diagnostic)
         print('Received during transmission: ' + str(res))
         recieved = self.waitForComplete(self.diagnostic[0], 20, 50)
@@ -327,8 +328,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def toggleServos(self):
         self.spi.xfer(self.diagnostic)
-        sleep(self.readDelay)
-        received = self.spi.readbytes(20)
+        sleep(self.cmdDelay)
+        received = self.waitForComplete(self.diagnostic[0], 2, 4)
 
         if received[18] > 0b00001111: #if one is on
             received = self.spi.xfer([self.servo, 0x00]) #turn all off
@@ -370,8 +371,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogXNeg(self):
         self.spi.xfer([self.jog, 0b10000000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitForComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x01]:
@@ -385,8 +386,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogXPos(self):
         self.spi.xfer([self.jog, 0b10001000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x02]:
@@ -400,8 +401,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogYNeg(self):
         self.spi.xfer([self.jog, 0b01000000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x01]:
@@ -415,8 +416,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogYPos(self):
         self.spi.xfer([self.jog, 0b01001000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x02]:
@@ -430,8 +431,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogZNeg(self):
         self.spi.xfer([self.jog, 0b00100000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x01]:
@@ -445,8 +446,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogZPos(self):
         self.spi.xfer([self.jog, 0b00101000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
     
@@ -461,8 +462,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogThetaCCW(self):
         self.spi.xfer([self.jog, 0b00010000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x03]:
@@ -474,8 +475,8 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def jogThetaCW(self):
         self.spi.xfer([self.jog, 0b00011000 | self.binRef[self.jogIndex]])
-        sleep(self.readDelay)
-        received = self.spi.readbytes(2)
+        sleep(self.cmdDelay)
+        received = self.waitforComplete(self.jog, 2, 4)
         if received == [self.jog, 0x00]:
             pass
         elif received == [self.jog, 0x03]:
@@ -549,7 +550,7 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
                     while line < len(self.gCodeList) and len(txBuffer) + len(self.gCodeList[line]) < 256: # max of 255 
                         txBuffer = txBuffer + self.gCodeList[line]
                         line = line + 1
-                        
+
                     #transmit command and size
                     #print(str(self.gcode) + ', ' + str(len(txBuffer)) + '\n')
                     spi.xfer([self.gcode, len(txBuffer)])
