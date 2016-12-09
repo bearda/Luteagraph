@@ -179,7 +179,7 @@
 </string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Home">
      <property name="sizePolicy">
@@ -393,7 +393,7 @@ background-color: rgb(172, 99, 22);</string>
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>510</x>
         <y>240</y>
         <width>31</width>
         <height>21</height>
@@ -705,9 +705,6 @@ border-radius:5px;
       <property name="maximum">
        <number>100</number>
       </property>
-      <property name="value">
-       <number>0</number>
-      </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
@@ -822,27 +819,6 @@ border-color:rgb(172, 99, 22)</string>
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
-     <widget class="QLabel" name="TimeEstimate">
-      <property name="geometry">
-       <rect>
-        <x>480</x>
-        <y>60</y>
-        <width>271</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Arial Rounded MT Bold</family>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#a1a4a3;&quot;&gt;Estimated time to completion:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="speedDispProj">
       <property name="geometry">
        <rect>
@@ -861,7 +837,7 @@ border-color:rgb(172, 99, 22)</string>
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#a1a4a3;&quot;&gt;100%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#a1a4a3;&quot;&gt;100%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1015,7 +991,6 @@ color:rgb(161, 164, 163);</string>
      <zorder>Stop</zorder>
      <zorder>FileSelector</zorder>
      <zorder>FileDescription</zorder>
-     <zorder>TimeEstimate</zorder>
      <zorder>speedDispProj</zorder>
      <zorder>speedUpProj</zorder>
      <zorder>label_56</zorder>
@@ -1640,7 +1615,7 @@ border-color:rgb(161, 164, 163);</string>
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#a1a4a3;&quot;&gt;Speed:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#a1a4a3;&quot;&gt;Distance:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1664,7 +1639,7 @@ border-color:rgb(161, 164, 163);</string>
        <string notr="true">background-color: rgba(255, 255, 255, 0);</string>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#a1a4a3;&quot;&gt;1 mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#a1a4a3;&quot;&gt;1 mm&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

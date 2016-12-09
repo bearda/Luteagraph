@@ -549,11 +549,17 @@ class MyWindowClass(QtWidgets.QMainWindow, Ui_MainWindow):
                     while line < len(self.gCodeList) and len(txBuffer) + len(self.gCodeList[line]) < 256: # max of 255 
                         txBuffer = txBuffer + self.gCodeList[line]
                         line = line + 1
-
+                        
                     #transmit command and size
-                    print(str(self.gcode) + ', ' + str(len(txBuffer)) + '\n')
+                    #print(str(self.gcode) + ', ' + str(len(txBuffer)) + '\n')
+                    spi.xfer([self.gcode, len(txBuffer)])
+                    sleep(0.01)
+
                     #transmit gcode dump
-                    print(txBuffer)
+                    #print(txBuffer)
+                    spi.xfer(list(txBuffer))
+                    self.waitForComplete(self.gcode, 2, 20)
+
                     #clear tx buffer
                     txBuffer = ''
                     self.updateProgress(line, len(self.gCodeList))
@@ -576,4 +582,3 @@ if __name__ == '__main__':
     myWindow = MyWindowClass()
     myWindow.show()
     sys.exit(app.exec_())
-    
